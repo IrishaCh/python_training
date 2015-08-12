@@ -176,13 +176,9 @@ class TestAddContact(unittest.TestCase):
                                             home_addr="",
                                             notes="",
                                             extra_phone=""))
-        # fill combo-boxes
-        self.choose_from_combo(wd, combo="1", value="1")   # 1 - комбо, 1  - число не выбрано
-        self.choose_from_combo(wd, combo="2", value="1")   # 2 - комбо, 1  - месяц не выбран
-        self.choose_from_combo(wd, combo="3", value="1")   # 3 - комбо, 1  - число не выбрано
-        self.choose_from_combo(wd, combo="4", value="1")   # 4 - комбо, 1  - месяц не выбран
-        # fill the group
-        self.choose_from_combo(wd, combo="5", value="1")   # 5 - комбо, 1  - не принадлежит никакой группе
+        # fill combo-boxes: combo - № комбобокса, value - значение (1 - соответствует "не выбрано")
+        for i in range(1, 6):
+            self.choose_from_combo(wd, combo=str(i), value="1")   # 1 - комбо, 1  - число не выбрано
         self.save_contact_form(wd)
         self.logout(wd)
 
