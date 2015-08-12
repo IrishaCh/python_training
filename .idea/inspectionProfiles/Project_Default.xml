@@ -1,0 +1,61 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="48">
+            <item index="0" class="java.lang.String" itemvalue="import" />
+            <item index="1" class="java.lang.String" itemvalue="def" />
+            <item index="2" class="java.lang.String" itemvalue="wd.find_element_by_name" />
+            <item index="3" class="java.lang.String" itemvalue="self.wd" />
+            <item index="4" class="java.lang.String" itemvalue="self.wd.quit" />
+            <item index="5" class="java.lang.String" itemvalue="wd" />
+            <item index="6" class="java.lang.String" itemvalue="unittest.main" />
+            <item index="7" class="java.lang.String" itemvalue="wd.find_element_by_css_selector" />
+            <item index="8" class="java.lang.String" itemvalue="wd.find_element_by_xpath" />
+            <item index="9" class="java.lang.String" itemvalue="wd.switch_to_alert" />
+            <item index="10" class="java.lang.String" itemvalue="from" />
+            <item index="11" class="java.lang.String" itemvalue="try" />
+            <item index="12" class="java.lang.String" itemvalue="except" />
+            <item index="13" class="java.lang.String" itemvalue="self.wd.implicitly_wait" />
+            <item index="14" class="java.lang.String" itemvalue="class" />
+            <item index="15" class="java.lang.String" itemvalue="wd.get" />
+            <item index="16" class="java.lang.String" itemvalue="if" />
+            <item index="17" class="java.lang.String" itemvalue="return" />
+            <item index="18" class="java.lang.String" itemvalue="wd.find_element_by_link_text" />
+            <item index="19" class="java.lang.String" itemvalue="self.login" />
+            <item index="20" class="java.lang.String" itemvalue="self.open_contacts_page" />
+            <item index="21" class="java.lang.String" itemvalue="self.open_home_page" />
+            <item index="22" class="java.lang.String" itemvalue="self.open_add_new_contact_form" />
+            <item index="23" class="java.lang.String" itemvalue="self.fill_contacts_form" />
+            <item index="24" class="java.lang.String" itemvalue="self.open_add_contact_form" />
+            <item index="25" class="java.lang.String" itemvalue="self.save_contact_form" />
+            <item index="26" class="java.lang.String" itemvalue="self.logout" />
+            <item index="27" class="java.lang.String" itemvalue="home_phone" />
+            <item index="28" class="java.lang.String" itemvalue="last_name" />
+            <item index="29" class="java.lang.String" itemvalue="middle_name" />
+            <item index="30" class="java.lang.String" itemvalue="birth_year" />
+            <item index="31" class="java.lang.String" itemvalue="notes" />
+            <item index="32" class="java.lang.String" itemvalue="work_phone" />
+            <item index="33" class="java.lang.String" itemvalue="home_addr" />
+            <item index="34" class="java.lang.String" itemvalue="pic" />
+            <item index="35" class="java.lang.String" itemvalue="title" />
+            <item index="36" class="java.lang.String" itemvalue="email_3" />
+            <item index="37" class="java.lang.String" itemvalue="company_address" />
+            <item index="38" class="java.lang.String" itemvalue="email_2" />
+            <item index="39" class="java.lang.String" itemvalue="email_1" />
+            <item index="40" class="java.lang.String" itemvalue="anniv_year" />
+            <item index="41" class="java.lang.String" itemvalue="mobile_phone" />
+            <item index="42" class="java.lang.String" itemvalue="company_name" />
+            <item index="43" class="java.lang.String" itemvalue="nickname" />
+            <item index="44" class="java.lang.String" itemvalue="fax" />
+            <item index="45" class="java.lang.String" itemvalue="extra_phone" />
+            <item index="46" class="java.lang.String" itemvalue="homepage" />
+            <item index="47" class="java.lang.String" itemvalue="self.choose_from_combo" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
