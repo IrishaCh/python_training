@@ -6,7 +6,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
-    <option name="requirementsPath" value="" />
+    <option name="requirementsPath" value="C:\TEST\training\python_training\env\Scripts\py.test-2.7.exe" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="py.test" />
