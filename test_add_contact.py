@@ -40,10 +40,7 @@ def test_add_contact(app):
     dataset = (("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1"))
     for i in range(0, 5):
         (combo, value) = dataset[i]
-        app.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
-    # не удалось грамотно вынести вызов функции save_contact_form в функцию fill_contacts_form, так как
-    # несколько раз вызывается функция choose_from_combo
-    app.save_contact_form()
+        app.choose_from_combo(combo, value, i)   # 1 - комбо, 3  - 1 число
     app.logout()
 
 
@@ -71,9 +68,6 @@ def test_add_empty_contact(app):
                                         notes="",
                                         extra_phone=""))
     # fill combo-boxes: combo - № комбобокса, value - значение (1 - соответствует "не выбрано")
-    for i in range(1, 6):
-        app.choose_from_combo(combo=str(i), value="1")   # 1 - комбо, 1  - число не выбрано
-    # не удалось грамотно вынести вызов функции save_contact_form в функцию fill_contacts_form, так как
-    # несколько раз вызывается функция choose_from_combo
-    app.save_contact_form()
+    for i in range(0, 5):
+        app.choose_from_combo(combo=str(i+1), value="1", step_counter=i)   # 1 - комбо, 1  - число не выбрано
     app.logout()

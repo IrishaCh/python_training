@@ -30,11 +30,13 @@ class Application:
         wd = self.wd
         wd.find_element_by_link_text("add new").click()
 
-    def choose_from_combo(self, combo, value):
+    def choose_from_combo(self, combo, value, step_counter):
         wd = self.wd
         if not wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value))\
                 .is_selected():
             wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value)).click()
+        if step_counter == 4:
+            self.save_contact_form()
 
     def create_group(self, group):
         wd = self.wd
