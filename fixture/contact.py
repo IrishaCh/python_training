@@ -109,13 +109,13 @@ class ContactHelper:
     def delete_first_or_all_contacts(self, answer, name_attr_for_deleting):
         wd = self.app.wd
         if name_attr_for_deleting == "selected[]":
-            function_for_find = wd.find_element_by_name("selected[]")
+            function_for_find = wd.find_element_by_name
         else:
-            function_for_find = wd.find_element_by_id("MassCB")
+            function_for_find = wd.find_element_by_id
         try:
             # checkbox exists
-            if not function_for_find.is_selected():
-                function_for_find.click()
+            if not function_for_find(name_attr_for_deleting).is_selected():
+                function_for_find(name_attr_for_deleting).click()
             is_checkbox_exists = True
             self.delete_and_reaction(answer, is_checkbox_exists)
         except (NoSuchElementException, UnexpectedAlertPresentException):
