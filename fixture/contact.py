@@ -1,4 +1,6 @@
 __author__ = 'Irina.Chegodaeva'
+from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import UnexpectedAlertPresentException
 
 
 class ContactHelper:
@@ -93,3 +95,30 @@ class ContactHelper:
     def save_contact_form(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+
+    def delete_and_reaction(self, answer, is_checkbox_exists):
+        # press delete and confirming deleting or not
+        wd = self.app.wd
+        wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
+        if wd.switch_to_alert():
+            if answer == "N" and is_checkbox_exists:
+                wd.switch_to_alert().dismiss()
+            else:
+                wd.switch_to_alert().accept()
+
+    def delete_first_or_all_contacts(self, answer, name_attr_for_deleting):
+        wd = self.app.wd
+        if name_attr_for_deleting == "selected[]":
+            function_for_find = wd.find_element_by_name("selected[]")
+        else:
+            function_for_find = wd.find_element_by_id("MassCB")
+        try:
+            # checkbox exists
+            if not function_for_find.is_selected():
+                function_for_find.click()
+            is_checkbox_exists = True
+            self.delete_and_reaction(answer, is_checkbox_exists)
+        except (NoSuchElementException, UnexpectedAlertPresentException):
+            # checkbox not exists
+            is_checkbox_exists = False
+            self.delete_and_reaction(answer, is_checkbox_exists)
