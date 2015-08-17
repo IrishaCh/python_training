@@ -97,7 +97,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def delete_and_reaction(self, answer, is_checkbox_exists):
-        # press delete and confirming deleting or not
+        # pressing delete and confirming deleting or not
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         if wd.switch_to_alert():
@@ -106,7 +106,7 @@ class ContactHelper:
             else:
                 wd.switch_to_alert().accept()
 
-    def delete_first_or_all_contacts(self, answer, name_attr_for_deleting):
+    def delete_first_or_all(self, answer, name_attr_for_deleting):
         wd = self.app.wd
         if name_attr_for_deleting == "selected[]":
             function_for_find = wd.find_element_by_name
