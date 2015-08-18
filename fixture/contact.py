@@ -1,6 +1,7 @@
 __author__ = 'Irina.Chegodaeva'
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
+import time
 
 
 class ContactHelper:
@@ -16,13 +17,22 @@ class ContactHelper:
         wd = self.app.wd
         # if new contact: open page "add new", if editing: stay on current page and click Edit
         if is_new == 1:
+            # adding new contact
             self.open_add_contact_form()
-            # redefining name of the group
-            new_last_name = contact.last_name
-        else:
+        elif is_new <= 0:
+            # editing contact from edit_form = 0, deleting contact from edit_form = -1
             wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
             # redefining name of the group
-            new_last_name = contact.last_name + str(self.app.postfix.substring)
+            contact.last_name = contact.last_name + str(self.app.postfix.substring)
+        elif is_new == 2:
+            # editing contact from detail_form
+            wd.find_element_by_css_selector("img[alt=\"Details\"]").click()
+            time.sleep(10)
+            wd.find_element_by_name("modifiy").click()
+            time.sleep(10)
+            # redefining name of the group
+            contact.last_name = contact.last_name + str(self.app.postfix.substring)
+            contact.first_name = contact.first_name + str(self.app.postfix.substring)
         # filling initials
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -32,16 +42,17 @@ class ContactHelper:
         wd.find_element_by_name("middlename").send_keys(contact.middle_name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(new_last_name)
+        wd.find_element_by_name("lastname").send_keys(contact.last_name)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(contact.nickname)
-        # adding the photo
-        wd.find_element_by_name("photo").send_keys(contact.pic)
-        # deleting photo
         if delete_photo == 1:
+            # deleting photo
             if not wd.find_element_by_name("delete_photo").is_selected():
                 wd.find_element_by_name("delete_photo").click()
+        else:
+            # adding the photo
+            wd.find_element_by_name("photo").send_keys(contact.pic)
         # employers' information
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()

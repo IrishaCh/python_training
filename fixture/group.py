@@ -17,19 +17,18 @@ class GroupHelper:
         if is_creating == 1:
             wd.find_element_by_name("new").click()
             # redefining name of the group
-            new_name = group.name
             submit_or_update = "submit"
         else:
             wd.find_element_by_name("selected[]").click()
             # click on edit button
             wd.find_element_by_name("edit").click()
             # redefining name of the group
-            new_name = group.name + str(self.app.postfix.substring)
+            group.name = group.name + str(self.app.postfix.substring)
             submit_or_update = "update"
         # fill group form
         wd.find_element_by_name("group_name").click()
         wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(new_name)
+        wd.find_element_by_name("group_name").send_keys(group.name)
         wd.find_element_by_name("group_header").click()
         wd.find_element_by_name("group_header").clear()
         wd.find_element_by_name("group_header").send_keys(group.header)
