@@ -12,17 +12,17 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
 
-    def choose_from_combo(self, combo, value, step_counter):
+    def fill_form(self, contact, delete_photo, is_new):
         wd = self.app.wd
-        if not wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value))\
-                .is_selected():
-            wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value)).click()
-        if step_counter == 4:
-            self.save_contact_form()
-
-    def fill_form(self, contact):
-        wd = self.app.wd
-        self.open_add_contact_form()
+        # if new contact: open page "add new", if editing: stay on current page and click Edit
+        if is_new == 1:
+            self.open_add_contact_form()
+            # redefining name of the group
+            new_last_name = contact.last_name
+        else:
+            wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+            # redefining name of the group
+            new_last_name = contact.last_name + str(self.app.postfix.substring)
         # filling initials
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
@@ -32,12 +32,16 @@ class ContactHelper:
         wd.find_element_by_name("middlename").send_keys(contact.middle_name)
         wd.find_element_by_name("lastname").click()
         wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
+        wd.find_element_by_name("lastname").send_keys(new_last_name)
         wd.find_element_by_name("nickname").click()
         wd.find_element_by_name("nickname").clear()
         wd.find_element_by_name("nickname").send_keys(contact.nickname)
         # adding the photo
         wd.find_element_by_name("photo").send_keys(contact.pic)
+        # deleting photo
+        if delete_photo == 1:
+            if not wd.find_element_by_name("delete_photo").is_selected():
+                wd.find_element_by_name("delete_photo").click()
         # employers' information
         wd.find_element_by_name("title").click()
         wd.find_element_by_name("title").clear()
@@ -92,9 +96,21 @@ class ContactHelper:
         wd.find_element_by_name("phone2").clear()
         wd.find_element_by_name("phone2").send_keys(contact.extra_phone)
 
-    def save_contact_form(self):
+    def choose_from_combo(self, combo, value):
         wd = self.app.wd
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        if not wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value))\
+                .is_selected():
+            wd.find_element_by_xpath("//div[@id='content']/form/select[%s]//option[%s]" % (combo, value)).click()
+
+    def save_contact_form(self, is_new):
+        wd = self.app.wd
+        if is_new == 1:
+            name_path = "//div[@id='content']/form/input[21]"
+        elif is_new == 0:
+            name_path = "//div[@id='content']/form[1]/input[22]"
+        elif is_new == -1:
+            name_path = "//div[@id='content']/form[2]/input[2]"
+        wd.find_element_by_xpath(name_path).click()
 
     def button_delete_and_reaction(self, answer, is_checkbox_exists):
         # pressing delete and confirming deleting or not

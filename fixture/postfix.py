@@ -2,7 +2,7 @@ __author__ = 'Irina.Chegodaeva'
 import datetime
 
 
-class PrefixHelper:
+class PostfixHelper:
 
     def __init__(self, app):
         self.app = app

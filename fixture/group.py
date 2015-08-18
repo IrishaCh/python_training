@@ -24,7 +24,7 @@ class GroupHelper:
             # click on edit button
             wd.find_element_by_name("edit").click()
             # redefining name of the group
-            new_name = group.name + str(self.app.prefix.substring)
+            new_name = group.name + str(self.app.postfix.substring)
             submit_or_update = "update"
         # fill group form
         wd.find_element_by_name("group_name").click()

@@ -25,13 +25,14 @@ def test_add_contact(app):
                                         anniv_year="1990",
                                         home_addr="Home Address",
                                         notes="Some Notes",
-                                        extra_phone="(999)111-11-55"))
+                                        extra_phone="(999)111-11-55"), delete_photo=0, is_new=1)
     # fill combo-boxes ("комбобокс","число, месяц или группа")
     # value: 3  - 1 число, 2  - Январь месяц, 12 - 10 число, 3  - Февраль месяц, 1  - не принадлежит никакой группе
     dataset = (("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1"))
     for i in range(0, 5):
         (combo, value) = dataset[i]
-        app.contact.choose_from_combo(combo, value, i)   # 1 - комбо, 3  - 1 число
+        app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
+    app.contact.save_contact_form(is_new=1)
     app.session.logout()
 
 
@@ -57,8 +58,9 @@ def test_add_empty_contact(app):
                                         anniv_year="",
                                         home_addr="",
                                         notes="",
-                                        extra_phone=""))
+                                        extra_phone=""), delete_photo=0, is_new=1)
     # fill combo-boxes: combo - № комбобокса, value - значение (1 - соответствует "не выбрано")
     for i in range(0, 5):
-        app.contact.choose_from_combo(combo=str(i+1), value="1", step_counter=i)   # 1 - комбо, 1  - число не выбрано
+        app.contact.choose_from_combo(combo=str(i+1), value="1")   # 1 - комбо, 1  - число не выбрано
+    app.contact.save_contact_form(is_new=1)
     app.session.logout()
