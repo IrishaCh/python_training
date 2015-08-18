@@ -96,7 +96,7 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
-    def delete_and_reaction(self, answer, is_checkbox_exists):
+    def button_delete_and_reaction(self, answer, is_checkbox_exists):
         # pressing delete and confirming deleting or not
         wd = self.app.wd
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
@@ -117,8 +117,8 @@ class ContactHelper:
             if not function_for_find(name_attr_for_deleting).is_selected():
                 function_for_find(name_attr_for_deleting).click()
             is_checkbox_exists = True
-            self.delete_and_reaction(answer, is_checkbox_exists)
+            self.button_delete_and_reaction(answer, is_checkbox_exists)
         except (NoSuchElementException, UnexpectedAlertPresentException):
             # checkbox not exists
             is_checkbox_exists = False
-            self.delete_and_reaction(answer, is_checkbox_exists)
+            self.button_delete_and_reaction(answer, is_checkbox_exists)
