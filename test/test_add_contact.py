@@ -4,7 +4,6 @@ from model.contact import Contact
 
 
 def test_add_contact(app):
-    app.session.login(username="admin", password="secret")
     app.contact.fill_form(Contact(first_name="First_Name",
                                         middle_name="Middle_Name",
                                         last_name="Last_Name",
@@ -33,11 +32,9 @@ def test_add_contact(app):
         (combo, value) = dataset[i]
         app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
     app.contact.save_contact_form(is_new=1)
-    app.session.logout()
 
 
 def test_add_empty_contact(app):
-    app.session.login(username="admin", password="secret")
     app.contact.fill_form(Contact(first_name="",
                                         middle_name="",
                                         last_name="",
@@ -63,4 +60,3 @@ def test_add_empty_contact(app):
     for i in range(0, 5):
         app.contact.choose_from_combo(combo=str(i+1), value="1")   # 1 - комбо, 1  - число не выбрано
     app.contact.save_contact_form(is_new=1)
-    app.session.logout()

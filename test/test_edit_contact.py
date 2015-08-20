@@ -8,7 +8,6 @@ from model.contact import Contact
 #          1 - создание нового контакта
 #          2 - редактирование контакта из формы просмотра деталей
 def test_edit_contact(app):
-    app.session.login(username="admin", password="secret")
     app.contact.fill_form(Contact(first_name="First_Name",
                                         middle_name="Middle_Name",
                                         last_name="Last_Name",
@@ -37,11 +36,9 @@ def test_edit_contact(app):
         (combo, value) = dataset[i]
         app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
     app.contact.save_contact_form(is_new=0)
-    app.session.logout()
 
 
 def test_edit_contact_from_details(app):
-    app.session.login(username="admin", password="secret")
     app.contact.fill_form(Contact(first_name="First_Name",
                                         middle_name="Middle_Name",
                                         last_name="Last_Name",
@@ -70,11 +67,9 @@ def test_edit_contact_from_details(app):
         (combo, value) = dataset[i]
         app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
     app.contact.save_contact_form(is_new=0)
-    app.session.logout()
 
 
 def test_edit_contact_and_delete(app):
-    app.session.login(username="admin", password="secret")
     app.contact.fill_form(Contact(first_name="First_Name",
                                         middle_name="Middle_Name",
                                         last_name="Last_Name",
@@ -104,4 +99,3 @@ def test_edit_contact_and_delete(app):
         app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
     # deleting form from edit
     app.contact.save_contact_form(is_new=0)
-    app.session.logout()
