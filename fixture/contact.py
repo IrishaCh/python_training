@@ -8,6 +8,10 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def open_homepage(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+
     def open_add_contact_form(self):
         wd = self.app.wd
         wd.find_element_by_link_text("add new").click()
@@ -25,7 +29,8 @@ class ContactHelper:
                 wd.find_element_by_name("delete_photo").click()
         else:
             # adding the photo
-            wd.find_element_by_name("photo").send_keys(contact.pic)
+            if not contact.pic == None:
+                wd.find_element_by_name("photo").send_keys(contact.pic)
         # employers' information
         self.app.libs.change_field_value("title", contact.title)
         self.app.libs.change_field_value("company", contact.company_name)
@@ -87,6 +92,7 @@ class ContactHelper:
 
     def delete_contact_from_edit_form(self):
         wd = self.app.wd
+        #self.open_homepage()
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
@@ -103,6 +109,7 @@ class ContactHelper:
 
     def delete_first_or_all(self, answer, name_attr_for_deleting):
         wd = self.app.wd
+        #self.open_homepage()
         if name_attr_for_deleting == "selected[]":
             function_for_find = wd.find_element_by_name
         else:
@@ -117,3 +124,7 @@ class ContactHelper:
             # checkbox not exists
             is_checkbox_exists = False
             self.button_delete_and_reaction(answer, is_checkbox_exists)
+
+    def count(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
