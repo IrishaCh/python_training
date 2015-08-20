@@ -2,9 +2,10 @@ __author__ = 'Irina.Chegodaeva'
 
 
 class Contact:
-    def __init__(self, first_name, middle_name, last_name, nickname, pic, title, company_name, company_address,
-                 home_phone, mobile_phone, work_phone, fax, email_1, email_2, email_3, homepage,
-                 birth_year, anniv_year, home_addr, notes, extra_phone):
+    def __init__(self, first_name=None, middle_name=None, last_name=None, nickname=None, pic=None, title=None,
+                 company_name=None, company_address=None, home_phone=None, mobile_phone=None, work_phone=None,
+                 fax=None, email_1=None, email_2=None, email_3=None, homepage=None, birth_year=None, anniv_year=None,
+                 home_addr=None, notes=None, extra_phone=None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name

@@ -2,7 +2,7 @@ from selenium.webdriver.firefox.webdriver import WebDriver
 from fixture.session import SessionHelper
 from fixture.group import GroupHelper
 from fixture.contact import ContactHelper
-from fixture.postfix import PostfixHelper
+from fixture.libs import CommonLib
 __author__ = 'Irina.Chegodaeva'
 
 
@@ -13,7 +13,7 @@ class Application:
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
-        self.postfix = PostfixHelper(self)
+        self.libs = CommonLib(self)
 
     def is_valid(self):
         try:
