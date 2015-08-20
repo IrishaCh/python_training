@@ -7,8 +7,8 @@ def test_modify_group_name(app):
 
 
 def test_modify_group_header(app):
-    app.group.create(Group(header="New header"))
+    app.group.modify_first_group(Group(header="New header"))
 
 
 def test_modify_group_footer(app):
-    app.group.create(Group(header="New footer"))
+    app.group.modify_first_group(Group(header="New footer"))
