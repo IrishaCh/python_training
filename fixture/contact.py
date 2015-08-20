@@ -1,7 +1,6 @@
 __author__ = 'Irina.Chegodaeva'
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
-import time
 
 
 class ContactHelper:

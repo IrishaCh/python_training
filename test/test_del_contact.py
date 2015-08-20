@@ -1,5 +1,4 @@
 __author__ = 'Irina.Chegodaeva'
-from model.contact import Contact
 
 
 # deleting first contact without accepting
