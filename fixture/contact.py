@@ -8,9 +8,12 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def open_homepage(self):
+    def open_main_page(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        # если страница не оканчивается на и на ней нет кнопки "send e-mail", то открыть основную страницу
+        if not (wd.current_url.endswith("addressbook/") and
+                        len(wd.find_elements_by_xpath("//div[@id='content']/form[2]/div[1]/input")) > 0):
+            wd.get("http://localhost/addressbook/")
 
     def open_add_contact_form(self):
         wd = self.app.wd
@@ -74,6 +77,7 @@ class ContactHelper:
 
     def modify_contact_from_edit_form(self, contact, delete_photo, dataset):
         wd = self.app.wd
+        self.open_main_page()
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=4)
@@ -82,7 +86,7 @@ class ContactHelper:
 
     def modify_contact_from_detail_form(self, contact, delete_photo, dataset):
         wd = self.app.wd
-        # editing contact from detail_form
+        self.open_main_page()
         wd.find_element_by_css_selector("img[alt=\"Details\"]").click()
         wd.find_element_by_name("modifiy").click()
         self.fill_contact_form(contact, delete_photo)
@@ -92,7 +96,7 @@ class ContactHelper:
 
     def delete_contact_from_edit_form(self):
         wd = self.app.wd
-        #self.open_homepage()
+        self.open_main_page()
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
@@ -109,7 +113,7 @@ class ContactHelper:
 
     def delete_first_or_all(self, answer, name_attr_for_deleting):
         wd = self.app.wd
-        #self.open_homepage()
+        self.open_main_page()
         if name_attr_for_deleting == "selected[]":
             function_for_find = wd.find_element_by_name
         else:
