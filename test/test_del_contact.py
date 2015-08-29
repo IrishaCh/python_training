@@ -24,6 +24,8 @@ def test_delete_first_contact_accept(app):
     app.contact.delete_first_or_all(answer="Y", name_attr_for_deleting="selected[]")
     new_contact = app.contact.get_contact_list()
     assert len(old_contact) - 1 == len(new_contact)
+    old_contact[0:1] = []
+    assert old_contact == new_contact
 
 
 # deleting contact from edit_form
@@ -38,6 +40,8 @@ def test_delete_contact_from_edit_form(app):
     app.contact.delete_contact_from_edit_form()
     new_contact = app.contact.get_contact_list()
     assert len(old_contact) - 1 == len(new_contact)
+    old_contact[0:1] = []
+    assert old_contact == new_contact
 
 
 # deleting all contacts without accepting
