@@ -6,6 +6,7 @@ from model.contact import Contact
 def test_add_contact(app):
     # fill combo-boxes ("комбобокс","число, месяц или группа")
     # value: 3  - 1 число, 2  - Январь месяц, 12 - 10 число, 3  - Февраль месяц, 1  - не принадлежит никакой группе
+    old_contact = app.contact.get_contact_list()
     app.contact.add_contact(Contact(first_name="First_Name",
                                         middle_name="Middle_Name",
                                         last_name="Last_Name",
@@ -31,15 +32,13 @@ def test_add_contact(app):
                                     delete_photo=False,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1"))
                             )
-    # fill combo-boxes ("комбобокс","число, месяц или группа")
-    # value: 3  - 1 число, 2  - Январь месяц, 12 - 10 число, 3  - Февраль месяц, 1  - не принадлежит никакой группе
-    #dataset = (("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1"))
-    #for i in range(0, 5):
-    #    (combo, value) = dataset[i]
-    #    app.contact.choose_from_combo(combo, value)   # 1 - комбо, 3  - 1 число
+
+    new_contact = app.contact.get_contact_list()
+    assert len(old_contact) + 1 == len(new_contact)
 
 
 def test_add_empty_contact(app):
+    old_contact = app.contact.get_contact_list()
     app.contact.add_contact(Contact(first_name="",
                                         middle_name="",
                                         last_name="",
@@ -65,7 +64,6 @@ def test_add_empty_contact(app):
                                     delete_photo=False,
                                     dataset=(("1", "1"), ("2", "1"), ("3", "1"), ("4", "1"), ("5", "1"))
                             )
-    # fill combo-boxes: combo - № комбобокса, value - значение (1 - соответствует "не выбрано")
-    #for i in range(0, 5):
-    #    app.contact.choose_from_combo(combo=str(i+1), value="1")   # 1 - комбо, 1  - число не выбрано
-    #app.contact.save_contact_form(is_new=1)
+    new_contact = app.contact.get_contact_list()
+    assert len(old_contact) + 1 == len(new_contact)
+

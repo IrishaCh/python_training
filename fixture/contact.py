@@ -1,6 +1,7 @@
 __author__ = 'Irina.Chegodaeva'
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, NoSuchAttributeException
 from selenium.common.exceptions import UnexpectedAlertPresentException
+from model.contact import Contact
 
 
 class ContactHelper:
@@ -11,8 +12,8 @@ class ContactHelper:
     def open_main_page(self):
         wd = self.app.wd
         # если страница не оканчивается на и на ней нет кнопки "send e-mail", то открыть основную страницу
-        if not (wd.current_url.endswith("addressbook/") and
-                        len(wd.find_elements_by_xpath("//div[@id='content']/form[2]/div[1]/input")) > 0):
+        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
+                "//div[@id='content']/form[2]/div[1]/input")) > 0):
             wd.get("http://localhost/addressbook/")
 
     def open_add_contact_form(self):
@@ -32,7 +33,7 @@ class ContactHelper:
                 wd.find_element_by_name("delete_photo").click()
         else:
             # adding the photo
-            if not contact.pic == None:
+            if contact.pic is not None:
                 wd.find_element_by_name("photo").send_keys(contact.pic)
         # employers' information
         self.app.libs.change_field_value("title", contact.title)
@@ -132,3 +133,25 @@ class ContactHelper:
     def count(self):
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_contact_list(self):
+        wd = self.app.wd
+        self.open_main_page()
+        contacts = []
+        for element in wd.find_elements_by_name("selected[]"):
+            text = element.text
+            try:
+                id = element.get_attribute("value")
+                contacts.append(Contact(first_name=text, id=id))
+            except NoSuchElementException:
+                pass
+
+        # for element in wd.find_elements_by_css_selector("td.center"):
+        #     try:
+        #         id = element.find_element_by_name("selected[]").get_attribute("value")
+        #         text = element.text
+        #         contacts.append(Contact(first_name=text, id=id))
+        #     except (NoSuchAttributeException, NoSuchElementException) as e:
+        #         pass
+
+        return contacts
