@@ -1,9 +1,10 @@
 __author__ = 'Irina.Chegodaeva'
 import os
 from model.contact import Contact
+from random import randrange
 
 
-def test_edit_contact_from_edit_form(app):
+def test_edit_some_contact_from_edit_form(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(last_name="test" + app.libs.substring),
                                     delete_photo=False,
@@ -30,18 +31,17 @@ def test_edit_contact_from_edit_form(app):
                         notes="Some Notes",
                         extra_phone="(999)111-11-55")
     old_contacts = app.contact.get_contact_list()
-    contact.id = old_contacts[0].id
-    app.contact.modify_contact_from_edit_form(contact,
-                                                delete_photo=True,
-                                                dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "3")),
-                                              )
+    index = randrange(len(old_contacts))
+    contact.id = old_contacts[index].id
+    app.contact.modify_some_contact_from_edit_form(index, contact, delete_photo=True,
+                                                dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "3")))
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    old_contacts[0] = contact
+    old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
-def test_edit_contact_from_details(app):
+def test_edit_some_contact_from_details(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(last_name="test" + app.libs.substring),
                                     delete_photo=False,
@@ -69,11 +69,10 @@ def test_edit_contact_from_details(app):
                         extra_phone="(999)111-11-55"
                      )
     old_contacts = app.contact.get_contact_list()
-    app.contact.modify_contact_from_detail_form(contact,
-                                                delete_photo=True,
-                                                dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "4")),
-                                                )
+    index = randrange(len(old_contacts))
+    app.contact.modify_some_contact_from_detail_form(index, contact, delete_photo=True,
+                                                dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "4")))
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    old_contacts[0] = contact
+    old_contacts[index] = contact
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)

@@ -1,5 +1,6 @@
 __author__ = 'Irina.Chegodaeva'
 from model.contact import Contact
+from random import randrange
 
 
 # deleting first contact without accepting
@@ -9,7 +10,8 @@ def test_delete_first_contact_decline(app):
                                     delete_photo=False,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
-    app.contact.delete_first_or_all(answer="N", name_attr_for_deleting="selected[]")
+    index = randrange(len(old_contacts))
+    app.contact.delete_some_contact_or_all(index, answer="N", name_attr_for_deleting="selected[]")
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
     assert old_contacts == new_contacts
@@ -22,10 +24,11 @@ def test_delete_first_contact_accept(app):
                                     delete_photo=True,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
-    app.contact.delete_first_or_all(answer="Y", name_attr_for_deleting="selected[]")
+    index = randrange(len(old_contacts))
+    app.contact.delete_some_contact_or_all(index, answer="Y", name_attr_for_deleting="selected[]")
     assert len(old_contacts) - 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    old_contacts[0:1] = []
+    old_contacts[index:index + 1] = []
     assert old_contacts == new_contacts
 
 
@@ -38,7 +41,8 @@ def test_delete_contact_from_edit_form(app):
                                     delete_photo=False,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
-    app.contact.delete_contact_from_edit_form()
+    index = randrange(len(old_contacts))
+    app.contact.delete_some_contact_from_edit_form(index)
     assert len(old_contacts) - 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
     old_contacts[0:1] = []
@@ -52,7 +56,7 @@ def test_delete_all_contacts_decline(app):
                                     delete_photo=False,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
-    app.contact.delete_first_or_all(answer="N", name_attr_for_deleting="MassCB")
+    app.contact.delete_some_contact_or_all(index=None, answer="N", name_attr_for_deleting="MassCB")
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
     assert old_contacts == new_contacts
@@ -64,6 +68,6 @@ def test_delete_all_contacts_accept(app):
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                     delete_photo=False,
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
-    app.contact.delete_first_or_all(answer="Y", name_attr_for_deleting="MassCB")
+    app.contact.delete_some_contact_or_all(index=None, answer="Y", name_attr_for_deleting="MassCB")
     new_contacts = app.contact.get_contact_list()
     assert len(new_contacts) == 0
