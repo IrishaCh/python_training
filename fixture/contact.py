@@ -75,6 +75,7 @@ class ContactHelper:
         self.fill_combo_boxes(dataset, counter_combo=5)
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
     def modify_contact_from_edit_form(self, contact, delete_photo, dataset):
         wd = self.app.wd
@@ -84,6 +85,7 @@ class ContactHelper:
         self.fill_combo_boxes(dataset, counter_combo=4)
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.contact_cache = None
 
     def modify_contact_from_detail_form(self, contact, delete_photo, dataset):
         wd = self.app.wd
@@ -94,6 +96,7 @@ class ContactHelper:
         self.fill_combo_boxes(dataset, counter_combo=4)
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.contact_cache = None
 
     def delete_contact_from_edit_form(self):
         wd = self.app.wd
@@ -101,6 +104,7 @@ class ContactHelper:
         wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
+        self.contact_cache = None
 
     def button_delete_and_reaction(self, answer, is_checkbox_exists):
         # pressing delete and confirming deleting or not
@@ -129,30 +133,35 @@ class ContactHelper:
             # checkbox not exists
             is_checkbox_exists = False
             self.button_delete_and_reaction(answer, is_checkbox_exists)
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
+        self.open_main_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.open_main_page()
-        contacts = []
-        i = 2
-        # найдем все записи о контактах. ничего умнее пока в голову так и не пришло
-        for element in wd.find_elements_by_name("selected[]"):
-            try:
-                # найдем id каждой записи
-                id = element.get_attribute("value")
-                # по i - найдем номер строки в талице, из которой вытащим текст 2-го и 3-го столбцов
-                value_cell = []
-                for c in range(2, 4):
-                    value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[" \
-                                                               + str(i) + "]/td[" + str(c) + "]").text)
-                l_name = str(value_cell[0])
-                f_name = str(value_cell[1])
-                contacts.append(Contact(last_name=l_name, first_name=f_name, id=id))
-                i += 1
-            except NoSuchElementException:
-                pass
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_main_page()
+            self.contact_cache = []
+            i = 2
+            # найдем все записи о контактах. ничего умнее пока в голову так и не пришло
+            for element in wd.find_elements_by_name("selected[]"):
+                try:
+                    # найдем id каждой записи
+                    id = element.get_attribute("value")
+                    # по i - найдем номер строки в талице, из которой вытащим текст 2-го и 3-го столбцов
+                    value_cell = []
+                    for c in range(2, 4):
+                        value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[" \
+                                                                   + str(i) + "]/td[" + str(c) + "]").text)
+                    l_name = str(value_cell[0])
+                    f_name = str(value_cell[1])
+                    self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id))
+                    i += 1
+                except NoSuchElementException:
+                    pass
+        return list(self.contact_cache)

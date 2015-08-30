@@ -10,8 +10,9 @@ def test_delete_first_contact_decline(app):
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     app.contact.delete_first_or_all(answer="N", name_attr_for_deleting="selected[]")
+    assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
+    assert old_contacts == new_contacts
 
 
 # deleting first contact with accepting
@@ -22,8 +23,8 @@ def test_delete_first_contact_accept(app):
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     app.contact.delete_first_or_all(answer="Y", name_attr_for_deleting="selected[]")
+    assert len(old_contacts) - 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) - 1 == len(new_contacts)
     old_contacts[0:1] = []
     assert old_contacts == new_contacts
 
@@ -38,8 +39,8 @@ def test_delete_contact_from_edit_form(app):
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     app.contact.delete_contact_from_edit_form()
+    assert len(old_contacts) - 1 == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) - 1 == len(new_contacts)
     old_contacts[0:1] = []
     assert old_contacts == new_contacts
 
@@ -52,8 +53,9 @@ def test_delete_all_contacts_decline(app):
                                     dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     app.contact.delete_first_or_all(answer="N", name_attr_for_deleting="MassCB")
+    assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    assert len(old_contacts) == len(new_contacts)
+    assert old_contacts == new_contacts
 
 
 # deleting all contacts with accepting
