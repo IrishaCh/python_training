@@ -1,5 +1,5 @@
 __author__ = 'Irina.Chegodaeva'
-from selenium.common.exceptions import NoSuchElementException, NoSuchAttributeException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from model.contact import Contact
 
@@ -138,20 +138,21 @@ class ContactHelper:
         wd = self.app.wd
         self.open_main_page()
         contacts = []
+        i = 2
+        # найдем все записи о контактах. ничего умнее пока в голову так и не пришло
         for element in wd.find_elements_by_name("selected[]"):
-            text = element.text
             try:
+                # найдем id каждой записи
                 id = element.get_attribute("value")
-                contacts.append(Contact(first_name=text, id=id))
+                # по i - найдем номер строки в талице, из которой вытащим текст 2-го и 3-го столбцов
+                value_cell = []
+                for c in range(2, 4):
+                    value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[" \
+                                                               + str(i) + "]/td[" + str(c) + "]").text)
+                l_name = str(value_cell[0])
+                f_name = str(value_cell[1])
+                contacts.append(Contact(last_name=l_name, first_name=f_name, id=id))
+                i += 1
             except NoSuchElementException:
                 pass
-
-        # for element in wd.find_elements_by_css_selector("td.center"):
-        #     try:
-        #         id = element.find_element_by_name("selected[]").get_attribute("value")
-        #         text = element.text
-        #         contacts.append(Contact(first_name=text, id=id))
-        #     except (NoSuchAttributeException, NoSuchElementException) as e:
-        #         pass
-
         return contacts

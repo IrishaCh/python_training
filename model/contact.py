@@ -1,4 +1,5 @@
 __author__ = 'Irina.Chegodaeva'
+from sys import maxsize
 
 
 class Contact:
@@ -30,7 +31,14 @@ class Contact:
         self.id = id
 
     def __repr__(self):
-        return "%s:%s" % (self.id, self.first_name)
+        return "%s:%s:%s" % (self.id, self.last_name, self.first_name)
 
     def __eq__(self, other):
-        return self.id == other.id and self.first_name == other.first_name
+        return (self.id is None or other.id is None or self.id == other.id) and \
+               self.last_name == other.last_name and self.first_name == other.first_name
+
+    def id_or_max(self):
+        if self.id:
+            return int(self.id)
+        else:
+            return maxsize
