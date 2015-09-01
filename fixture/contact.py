@@ -77,18 +77,28 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
+    # возможно в дальнейшем не будет использоваться
     def modify_contact_from_edit_form(self, contact, delete_photo, dataset):
         self.modify_some_contact_from_edit_form(0, contact, delete_photo, dataset)
+
+    def find_cell_id_by_index(self, index, cell_id):
+        wd = self.app.wd
+        index += 2
+        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[%s]/td[%s]/a/img" % (index, cell_id)).click()
+
+    def submit_modifications_from_edit_form(self, sform, sinput):
+        wd = self.app.wd
+        wd.find_element_by_xpath("//div[@id='content']/form[%s]/input[%s]" % (sform, sinput)).click()
 
     def modify_some_contact_from_edit_form(self, index, contact, delete_photo, dataset):
         wd = self.app.wd
         self.open_main_page()
         # нашли элемент по индексу
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+ str(index + 2) +"]/td[8]/a/img").click()
+        self.find_cell_id_by_index(index, 8)
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=4)
         # submit
-        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.submit_modifications_from_edit_form(1, 22)
         self.contact_cache = None
 
     # возможно в дальнейшем не будет использоваться
@@ -99,12 +109,12 @@ class ContactHelper:
         wd = self.app.wd
         self.open_main_page()
         # нашли элемент по индексу
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+ str(index + 2) +"]/td[7]/a/img").click()
+        self.find_cell_id_by_index(index, 7)
         wd.find_element_by_name("modifiy").click()
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=4)
         # submit
-        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
+        self.submit_modifications_from_edit_form(1, 22)
         self.contact_cache = None
 
     # возможно в дальнейшем не будет использоваться
@@ -115,13 +125,13 @@ class ContactHelper:
         wd = self.app.wd
         self.open_main_page()
         # нашли элемент по индексу
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr["+ str(index + 2) +"]/td[8]/a/img").click()
+        self.find_cell_id_by_index(index, 8)
         # submit
-        wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
+        self.submit_modifications_from_edit_form(2, 2)
         self.contact_cache = None
 
     # возможно в дальнейшем не будет использоваться
-    def button_delete_and_reaction(self, index, answer, is_checkbox_exists):
+    def button_delete_and_reaction(self, answer, is_checkbox_exists):
         self.button_delete_and_reaction_by_index(0, answer, is_checkbox_exists)
 
     def button_delete_and_reaction_by_index(self, index, answer, is_checkbox_exists):
@@ -177,8 +187,8 @@ class ContactHelper:
                     # по i - найдем номер строки в талице, из которой вытащим текст 2-го и 3-го столбцов
                     value_cell = []
                     for c in range(2, 4):
-                        value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[" \
-                                                                   + str(i) + "]/td[" + str(c) + "]").text)
+                        value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[%s]/td[%s]"
+                                                                   % (i, c)).text)
                     l_name = str(value_cell[0])
                     f_name = str(value_cell[1])
                     self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id))
