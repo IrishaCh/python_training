@@ -74,70 +74,66 @@ class ContactHelper:
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=5)
         # submit
-        wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        wd.find_element_by_name("submit").click()
         self.contact_cache = None
 
-    # возможно в дальнейшем не будет использоваться
-    def modify_contact_from_edit_form(self, contact, delete_photo, dataset):
-        self.modify_some_contact_from_edit_form(0, contact, delete_photo, dataset)
-
-    def find_cell_id_by_index(self, index, cell_id):
+    def find_pic_for_click_by_index(self, index, cell_id):
         wd = self.app.wd
         index += 2
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[%s]/td[%s]/a/img" % (index, cell_id)).click()
 
-    def submit_modifications_from_edit_form(self, sform, sinput):
+    def find_element_by_xpath_cell_id_index(self, cell_id, index):
         wd = self.app.wd
-        wd.find_element_by_xpath("//div[@id='content']/form[%s]/input[%s]" % (sform, sinput)).click()
+        return wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[%s]/td[%s]/input" % (index, cell_id))
 
-    def modify_some_contact_from_edit_form(self, index, contact, delete_photo, dataset):
+    def find_cell_id_by_index_and_click(self, index, cell_id):
+        wd = self.app.wd
+        index += 2
+        if not self.find_element_by_xpath_cell_id_index(cell_id, index).is_selected():
+            self.find_element_by_xpath_cell_id_index(cell_id, index).click()
+
+    def find_cell_id_by_index_and_unclick(self, index, cell_id):
+        wd = self.app.wd
+        index += 2
+        if self.find_element_by_xpath_cell_id_index(cell_id, index).is_selected():
+            self.find_element_by_xpath_cell_id_index(cell_id, index).click()
+
+    # action = update - изменить, action = delete - удалить
+    def submit_modifications_from_edit_form(self, action):
+        wd = self.app.wd
+        for element in wd.find_elements_by_name("update"):
+            if element.get_attribute("value") == action:
+                element.click()
+                return
+
+    # edit_detail: "edit_form" - из формы редактирование, "detail_form" - из формы просмотра деталей
+    def modify_some_contact(self, index, contact, delete_photo, dataset, edit_detail):
         wd = self.app.wd
         self.open_main_page()
         # нашли элемент по индексу
-        self.find_cell_id_by_index(index, 8)
+        if edit_detail == "edit_form":
+            self.find_pic_for_click_by_index(index, 8)
+        else:
+            self.find_pic_for_click_by_index(index, 7)
+            wd.find_element_by_name("modifiy").click()
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=4)
-        # submit
-        self.submit_modifications_from_edit_form(1, 22)
+        self.submit_modifications_from_edit_form("Update")
         self.contact_cache = None
-
-    # возможно в дальнейшем не будет использоваться
-    def modify_contact_from_detail_form(self, contact, delete_photo, dataset):
-        self.modify_some_contact_from_detail_form(0, contact, delete_photo, dataset)
-
-    def modify_some_contact_from_detail_form(self, index, contact, delete_photo, dataset):
-        wd = self.app.wd
-        self.open_main_page()
-        # нашли элемент по индексу
-        self.find_cell_id_by_index(index, 7)
-        wd.find_element_by_name("modifiy").click()
-        self.fill_contact_form(contact, delete_photo)
-        self.fill_combo_boxes(dataset, counter_combo=4)
-        # submit
-        self.submit_modifications_from_edit_form(1, 22)
-        self.contact_cache = None
-
-    # возможно в дальнейшем не будет использоваться
-    def delete_contact_from_edit_form(self):
-        self.delete_some_contact_from_edit_form(0)
 
     def delete_some_contact_from_edit_form(self, index):
         wd = self.app.wd
         self.open_main_page()
         # нашли элемент по индексу
-        self.find_cell_id_by_index(index, 8)
+        self.find_pic_for_click_by_index(index, 8)
         # submit
-        self.submit_modifications_from_edit_form(2, 2)
+        self.submit_modifications_from_edit_form("Delete")
         self.contact_cache = None
 
-    # возможно в дальнейшем не будет использоваться
     def button_delete_and_reaction(self, answer, is_checkbox_exists):
-        self.button_delete_and_reaction_by_index(0, answer, is_checkbox_exists)
-
-    def button_delete_and_reaction_by_index(self, index, answer, is_checkbox_exists):
         # pressing delete and confirming deleting or not
         wd = self.app.wd
-        wd.find_elements_by_xpath("//div[@id='content']/form[2]/div[2]/input")[index].click()
+        wd.find_element_by_xpath("//div/div[4]/form[2]/div[2]/input").click()
         if wd.switch_to_alert():
             if answer == "N" and is_checkbox_exists:
                 wd.switch_to_alert().dismiss()
@@ -145,26 +141,24 @@ class ContactHelper:
                 wd.switch_to_alert().accept()
         self.contact_cache = None
 
-    # возможно в дальнейшем не будет использоваться
-    def delete_first_or_all(self, answer, name_attr_for_deleting):
-        self.delete_some_contact_or_all(0, answer, name_attr_for_deleting)
-
     def delete_some_contact_or_all(self, index, answer, name_attr_for_deleting):
         wd = self.app.wd
         self.open_main_page()
         if name_attr_for_deleting == "selected[]":
-            function_for_find = wd.find_element_by_name
+            try:
+                self.find_cell_id_by_index_and_click(index, 1)
+                is_checkbox_exists = True
+            except (NoSuchElementException, UnexpectedAlertPresentException):
+                is_checkbox_exists = False
         else:
-            function_for_find = wd.find_element_by_id
-        try:
-            # checkbox exists
-            if not function_for_find(name_attr_for_deleting).is_selected():
-                function_for_find(name_attr_for_deleting).click()
+            if not wd.find_element_by_id(name_attr_for_deleting).is_selected():
+                wd.find_element_by_id(name_attr_for_deleting).click()
             is_checkbox_exists = True
-        except (NoSuchElementException, UnexpectedAlertPresentException):
-            # checkbox does not exist
-            is_checkbox_exists = False
-        self.button_delete_and_reaction(index, answer, is_checkbox_exists)
+        self.button_delete_and_reaction(answer, is_checkbox_exists)
+        # снимаем галку на выбранном чекбоксе, если не подтвержадем удаление
+        if answer == "N" and name_attr_for_deleting == "selected[]":
+            self.find_cell_id_by_index_and_unclick(index, 1)
+        self.contact_cache = None
 
     def count(self):
         wd = self.app.wd
