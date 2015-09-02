@@ -18,7 +18,7 @@ def test_delete_some_contact_decline(app):
 
 
 # deleting first contact with accepting
-def test_delete_first_contact_accept(app):
+def test_delete_some_contact_accept(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                     delete_photo=True,
@@ -35,7 +35,7 @@ def test_delete_first_contact_accept(app):
 # deleting contact from edit_form
 # fill combo-boxes ("комбобокс","число, мес€ц или группа")
 # value: 3  - 1 число, 2  - январь мес€ц, 12 - 10 число, 3  - ‘евраль мес€ц, группа не редактируетс€
-def test_delete_contact_from_edit_form(app):
+def test_delete_some_contact_from_edit_form(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                     delete_photo=False,

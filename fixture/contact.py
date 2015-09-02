@@ -2,6 +2,7 @@ __author__ = 'Irina.Chegodaeva'
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -77,11 +78,6 @@ class ContactHelper:
         wd.find_element_by_name("submit").click()
         self.contact_cache = None
 
-    def find_pic_for_click_by_index(self, index, cell_id):
-        wd = self.app.wd
-        index += 2
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[%s]/td[%s]/a/img" % (index, cell_id)).click()
-
     def find_element_by_xpath_cell_id_index(self, cell_id, index):
         wd = self.app.wd
         return wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[%s]/td[%s]/input" % (index, cell_id))
@@ -112,9 +108,9 @@ class ContactHelper:
         self.open_main_page()
         # нашли элемент по индексу
         if edit_detail == "edit_form":
-            self.find_pic_for_click_by_index(index, 8)
+            self.open_contact_to_edit_by_index(index)
         else:
-            self.find_pic_for_click_by_index(index, 7)
+            self.open_contact_view_by_index(index)
             wd.find_element_by_name("modifiy").click()
         self.fill_contact_form(contact, delete_photo)
         self.fill_combo_boxes(dataset, counter_combo=4)
@@ -124,8 +120,8 @@ class ContactHelper:
     def delete_some_contact_from_edit_form(self, index):
         wd = self.app.wd
         self.open_main_page()
-        # нашли элемент по индексу
-        self.find_pic_for_click_by_index(index, 8)
+        # нашли строку по индексу
+        self.open_contact_to_edit_by_index(index)
         # submit
         self.submit_modifications_from_edit_form("Delete")
         self.contact_cache = None
@@ -172,21 +168,54 @@ class ContactHelper:
             wd = self.app.wd
             self.open_main_page()
             self.contact_cache = []
-            i = 2
             # найдем все записи о контактах. ничего умнее пока в голову так и не пришло
-            for element in wd.find_elements_by_name("selected[]"):
-                try:
-                    # найдем id каждой записи
-                    id = element.get_attribute("value")
-                    # по i - найдем номер строки в талице, из которой вытащим текст 2-го и 3-го столбцов
-                    value_cell = []
-                    for c in range(2, 4):
-                        value_cell.append(wd.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[%s]/td[%s]"
-                                                                   % (i, c)).text)
-                    l_name = str(value_cell[0])
-                    f_name = str(value_cell[1])
-                    self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id))
-                    i += 1
-                except NoSuchElementException:
-                    pass
+            # в итоге сделала, как у инструктора
+            for row in wd.find_elements_by_name("entry"):
+                value_cell = row.find_elements_by_tag_name("td")
+                # найдем id каждой записи
+                id = value_cell[0].find_element_by_tag_name("input").get_attribute("value")
+                l_name = value_cell[1].text
+                f_name = value_cell[2].text
+                all_phones = value_cell[5].text.splitlines()
+                self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id))
+                # self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id,
+                #                                   home_phone=all_phones[0], mobile_phone=all_phones[1],
+                #                                   work_phone=all_phones[2], extra_phone=all_phones[3]))
         return list(self.contact_cache)
+
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.open_main_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def open_contact_view_by_index(self, index):
+        wd = self.app.wd
+        self.open_main_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        first_name = wd.find_element_by_name("firstname").get_attribute("value")
+        last_name = wd.find_element_by_name("lastname").get_attribute("value")
+        id = wd.find_element_by_name("id").get_attribute("value")
+        home_phone = wd.find_element_by_name("home").get_attribute("value")
+        work_phone = wd.find_element_by_name("work").get_attribute("value")
+        mobile_phone = wd.find_element_by_name("mobile").get_attribute("value")
+        extra_phone = wd.find_element_by_name("phone2").get_attribute("value")
+        return Contact(first_name=first_name, last_name=last_name, id=id, home_phone=home_phone,
+                       work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone)
+
+    def get_contact_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        text = wd.find_element_by_id("content").text
+        home_phone = re.search("H: (.*)", text).group(1)
+        work_phone = re.search("W: (.*)", text).group(1)
+        mobile_phone = re.search("M: (.*)", text).group(1)
+        extra_phone = re.search("P: (.*)", text).group(1)
+        return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone)
