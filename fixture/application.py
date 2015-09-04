@@ -23,11 +23,9 @@ class Application:
 
     def open_home_page(self):
         wd = self.wd
-        if (wd.current_url.endswith("addressbook/") and
-                    len(wd.find_elements_by_xpath("//form[@class='header']//a[.='Logout']")) > 0):
-            wd.find_element_by_xpath("//form[@class='header']//a[.='Logout']").click()
-        if not (wd.current_url.endswith("addressbook/") and
-                    len(wd.find_elements_by_xpath("//div[@id='content']//a[.='Create account']")) > 0):
+        if wd.current_url.endswith("addressbook/") and wd.find_element_by_link_text("Logout").is_displayed():
+            wd.find_element_by_link_text("Logout").click()
+        if not (wd.current_url.endswith("addressbook/") and wd.find_element_by_link_text("Create account").is_displayed()):
             wd.get("http://localhost/addressbook/")
 
     def destroy(self):

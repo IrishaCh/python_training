@@ -12,8 +12,8 @@ class ContactHelper:
 
     def open_main_page(self):
         wd = self.app.wd
-        # если страница не оканчивается на и на ней нет кнопки "send e-mail", то открыть основную страницу
-        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
+        # если страница не оканчивается на addressbook/ и на ней нет кнопки "send e-mail", то открыть основную страницу
+        if (not wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
                 "//div[@id='content']/form[2]/div[1]/input")) > 0):
             wd.get("http://localhost/addressbook/")
 
@@ -237,7 +237,7 @@ class ContactHelper:
                         s = s.group(1)
                     else:
                         s = ""
-                except (AttributeError):
+                except AttributeError:
                     s = ""
                 phones.append(s)
             home_phone = phones[0]
