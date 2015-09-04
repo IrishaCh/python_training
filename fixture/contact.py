@@ -176,11 +176,9 @@ class ContactHelper:
                 id = value_cell[0].find_element_by_tag_name("input").get_attribute("value")
                 l_name = value_cell[1].text
                 f_name = value_cell[2].text
-                all_phones = value_cell[5].text.splitlines()
-                self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id))
-                # self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id,
-                #                                   home_phone=all_phones[0], mobile_phone=all_phones[1],
-                #                                   work_phone=all_phones[2], extra_phone=all_phones[3]))
+                all_phones = value_cell[5].text
+                self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id,
+                                                  all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -203,19 +201,54 @@ class ContactHelper:
         first_name = wd.find_element_by_name("firstname").get_attribute("value")
         last_name = wd.find_element_by_name("lastname").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
-        home_phone = wd.find_element_by_name("home").get_attribute("value")
-        work_phone = wd.find_element_by_name("work").get_attribute("value")
-        mobile_phone = wd.find_element_by_name("mobile").get_attribute("value")
-        extra_phone = wd.find_element_by_name("phone2").get_attribute("value")
+        kind_phones = ["home", "mobile", "work", "phone2"]
+        prefixes = ["H: ", "\nM: ", "\nW: ", ""]
+        phones = []
+        string_phones = []
+        i = 0
+        for elem in kind_phones:
+            phones.append(wd.find_element_by_name(elem).get_attribute("value"))
+            if phones[i] != "" and i != 3:
+                string_phones.append(prefixes[i] + phones[i])
+            else:
+                string_phones.append(phones[i])
+            i += 1
+        home_phone = phones[0]
+        mobile_phone = phones[1]
+        work_phone = phones[2]
+        extra_phone = phones[3]
+        all_phones = "".join(string_phones)
         return Contact(first_name=first_name, last_name=last_name, id=id, home_phone=home_phone,
-                       work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone)
+                       work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone,
+                       first_3_phones=all_phones)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
-        home_phone = re.search("H: (.*)", text).group(1)
-        work_phone = re.search("W: (.*)", text).group(1)
-        mobile_phone = re.search("M: (.*)", text).group(1)
-        extra_phone = re.search("P: (.*)", text).group(1)
-        return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone)
+        prefixes = ["H", "M", "W", "P"]
+        phones = []
+        if text != "":
+            for i in range(0,len(prefixes)):
+                prefixes[i] = prefixes[i] + ": (.*)"
+                try:
+                    s = re.search(prefixes[i], text)
+                    if s is not None:
+                        s = s.group(1)
+                    else:
+                        s = ""
+                except (AttributeError):
+                    s = ""
+                phones.append(s)
+            home_phone = phones[0]
+            mobile_phone = phones[1]
+            work_phone = phones[2]
+            extra_phone = phones[3]
+        else:
+            home_phone = ""
+            work_phone = ""
+            mobile_phone = ""
+            extra_phone = ""
+        all_phones = str(home_phone + mobile_phone + work_phone + extra_phone)
+        return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone,
+                       all_phones_from_home_page=all_phones, first_3_phones=str(text))
