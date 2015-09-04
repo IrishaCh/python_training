@@ -76,6 +76,4 @@ def test_edit_some_contact_from_details(app):
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
     old_contacts[index] = contact
-    s = sorted(old_contacts, key=Contact.id_or_max)
-    p = sorted(new_contacts, key=Contact.id_or_max)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)

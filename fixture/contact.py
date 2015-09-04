@@ -13,7 +13,7 @@ class ContactHelper:
     def open_main_page(self):
         wd = self.app.wd
         # если страница не оканчивается на addressbook/ и на ней нет кнопки "send e-mail", то открыть основную страницу
-        if (not wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
+        if not (wd.current_url.endswith("addressbook/") and len(wd.find_elements_by_xpath(
                 "//div[@id='content']/form[2]/div[1]/input")) > 0):
             wd.get("http://localhost/addressbook/")
 
@@ -176,8 +176,12 @@ class ContactHelper:
                 id = value_cell[0].find_element_by_tag_name("input").get_attribute("value")
                 l_name = value_cell[1].text
                 f_name = value_cell[2].text
+                address = value_cell[3].text
+                all_e_mails = value_cell[4].text
                 all_phones = value_cell[5].text
-                self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, id=id,
+                homepage = value_cell[10].find_element_by_tag_name("img").get_attribute("title")
+                self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, company_address=address,
+                                                  all_e_mails_from_home_page=all_e_mails, homepage= homepage, id=id,
                                                   all_phones_from_home_page=all_phones))
         return list(self.contact_cache)
 
@@ -198,29 +202,29 @@ class ContactHelper:
     def get_contact_info_from_edit_page(self, index):
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
-        first_name = wd.find_element_by_name("firstname").get_attribute("value")
-        last_name = wd.find_element_by_name("lastname").get_attribute("value")
-        id = wd.find_element_by_name("id").get_attribute("value")
+        first_name = self.app.libs.get_text_by_attribute_name("firstname")
+        last_name = self.app.libs.get_text_by_attribute_name("lastname")
+        address = self.app.libs.get_text_by_attribute_name("address")
+        id = self.app.libs.get_text_by_attribute_name("id")
+        kind_emails = ["email", "email2", "email3"]
+        emails = []
+        for elem in kind_emails:
+            emails.append(self.app.libs.get_text_by_attribute_name(elem))
+        email_1 = emails[0]
+        email_2 = emails[1]
+        email_3 = emails[2]
+        homepage = self.app.libs.get_text_by_attribute_name("homepage")
         kind_phones = ["home", "mobile", "work", "phone2"]
-        prefixes = ["H: ", "\nM: ", "\nW: ", ""]
         phones = []
-        string_phones = []
-        i = 0
         for elem in kind_phones:
-            phones.append(wd.find_element_by_name(elem).get_attribute("value"))
-            if phones[i] != "" and i != 3:
-                string_phones.append(prefixes[i] + phones[i])
-            else:
-                string_phones.append(phones[i])
-            i += 1
+            phones.append(self.app.libs.get_text_by_attribute_name(elem))
         home_phone = phones[0]
         mobile_phone = phones[1]
         work_phone = phones[2]
         extra_phone = phones[3]
-        all_phones = "".join(string_phones)
-        return Contact(first_name=first_name, last_name=last_name, id=id, home_phone=home_phone,
-                       work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone,
-                       first_3_phones=all_phones)
+        return Contact(first_name=first_name, last_name=last_name, company_address=address, id=id, home_phone=home_phone,
+                       work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone, email_1=email_1,
+                       email_2=email_2, email_3=email_3, homepage=homepage)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
@@ -229,8 +233,8 @@ class ContactHelper:
         prefixes = ["H", "M", "W", "P"]
         phones = []
         if text != "":
-            for i in range(0,len(prefixes)):
-                prefixes[i] = prefixes[i] + ": (.*)"
+            for i in range(0, len(prefixes)):
+                prefixes[i] += ": (.*)"
                 try:
                     s = re.search(prefixes[i], text)
                     if s is not None:
@@ -251,4 +255,4 @@ class ContactHelper:
             extra_phone = ""
         all_phones = str(home_phone + mobile_phone + work_phone + extra_phone)
         return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone,
-                       all_phones_from_home_page=all_phones, first_3_phones=str(text))
+                       all_phones_from_home_page=all_phones)

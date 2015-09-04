@@ -15,3 +15,7 @@ class CommonLib:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
+
+    def get_text_by_attribute_name(self, attr_name):
+        wd = self.app.wd
+        return wd.find_element_by_name(attr_name).get_attribute("value").strip()
