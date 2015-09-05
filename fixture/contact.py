@@ -3,6 +3,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import UnexpectedAlertPresentException
 from model.contact import Contact
 import re
+import urllib
 
 
 class ContactHelper:
@@ -179,10 +180,17 @@ class ContactHelper:
                 address = value_cell[3].text
                 all_e_mails = value_cell[4].text
                 all_phones = value_cell[5].text
-                homepage = value_cell[10].find_element_by_tag_name("img").get_attribute("title")
+                try:
+                    company_url = value_cell[9].find_element_by_tag_name("a").get_attribute("href")
+                except NoSuchElementException:
+                    company_url = ""
+                try:
+                    homepage = value_cell[10].find_element_by_tag_name("img").get_attribute("title")
+                except NoSuchElementException:
+                    homepage = ""
                 self.contact_cache.append(Contact(last_name=l_name, first_name=f_name, company_address=address,
-                                                  all_e_mails_from_home_page=all_e_mails, homepage= homepage, id=id,
-                                                  all_phones_from_home_page=all_phones))
+                                                  all_e_mails_from_home_page=all_e_mails, homepage=homepage, id=id,
+                                                  all_phones_from_home_page=all_phones, company_url=company_url))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -222,9 +230,15 @@ class ContactHelper:
         mobile_phone = phones[1]
         work_phone = phones[2]
         extra_phone = phones[3]
+        # декодируем url адреса компании
+        substring_url = urllib.parse.quote_plus(address, safe='\n', encoding=None, errors=None)
+        company_url = "http://maps.google.com/maps?q=%s&t=h" % substring_url.replace('\n', '%2C+')
+        # убираем в каждой строке адреса компании лидирующие и завершающие пробелы
+        l = address.split("\n")
+        address = "\n".join(map(lambda x: x.strip(), l))
         return Contact(first_name=first_name, last_name=last_name, company_address=address, id=id, home_phone=home_phone,
                        work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone, email_1=email_1,
-                       email_2=email_2, email_3=email_3, homepage=homepage)
+                       email_2=email_2, email_3=email_3, homepage=homepage, company_url=company_url)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd

@@ -7,8 +7,8 @@ from random import randrange
 def test_delete_some_contact_decline(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
-                                    delete_photo=False,
-                                    dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+                                delete_photo=False,
+                                dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
     app.contact.delete_some_contact_or_all(index, answer="N", name_attr_for_deleting="selected[]")
@@ -21,8 +21,8 @@ def test_delete_some_contact_decline(app):
 def test_delete_some_contact_accept(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
-                                    delete_photo=True,
-                                    dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+                                delete_photo=True,
+                                dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
     app.contact.delete_some_contact_or_all(index, answer="Y", name_attr_for_deleting="selected[]")
@@ -38,8 +38,8 @@ def test_delete_some_contact_accept(app):
 def test_delete_some_contact_from_edit_form(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
-                                    delete_photo=False,
-                                    dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+                                delete_photo=False,
+                                dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
     index = randrange(len(old_contacts))
     app.contact.delete_some_contact_from_edit_form(index)
@@ -53,10 +53,9 @@ def test_delete_some_contact_from_edit_form(app):
 def test_delete_all_contacts_decline(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
-                                    delete_photo=False,
-                                    dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+                                delete_photo=False,
+                                dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     old_contacts = app.contact.get_contact_list()
-    index = randrange(len(old_contacts))
     app.contact.delete_some_contact_or_all(index=None, answer="N", name_attr_for_deleting="MassCB")
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
@@ -67,8 +66,8 @@ def test_delete_all_contacts_decline(app):
 def test_delete_all_contacts_accept(app):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
-                                    delete_photo=False,
-                                    dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+                                delete_photo=False,
+                                dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     app.contact.delete_some_contact_or_all(index=None, answer="Y", name_attr_for_deleting="MassCB")
     new_contacts = app.contact.get_contact_list()
     assert len(new_contacts) == 0

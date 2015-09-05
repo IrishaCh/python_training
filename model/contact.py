@@ -8,7 +8,7 @@ class Contact:
                  company_name=None, company_address=None, home_phone=None, mobile_phone=None, work_phone=None,
                  fax=None, email_1=None, email_2=None, email_3=None, homepage=None, birth_year=None, anniv_year=None,
                  home_addr=None, notes=None, extra_phone=None, id=None, all_phones_from_home_page=None,
-                 all_e_mails_from_home_page=None):
+                 all_e_mails_from_home_page=None, company_url=None):
         self.first_name = first_name
         self.middle_name = middle_name
         self.last_name = last_name
@@ -33,15 +33,14 @@ class Contact:
         self.id = id
         self.all_phones_from_home_page = all_phones_from_home_page
         self.all_e_mails_from_home_page = all_e_mails_from_home_page
+        self.company_url = company_url
 
     def __repr__(self):
         return "%s:%s:%s" % (self.id, self.last_name, self.first_name)
 
     def __eq__(self, other):
         return (self.id is None or other.id is None or self.id == other.id) and \
-               self.last_name == other.last_name and self.first_name == other.first_name #and \
-               #self.all_phones_from_home_page == other.all_phones_from_home_page #and \
-               #re.match(other.first_3_phones, self.first_3_phones) is not None
+               self.last_name == other.last_name and self.first_name == other.first_name
 
     def id_or_max(self):
         if self.id:
