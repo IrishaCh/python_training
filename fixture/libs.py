@@ -18,4 +18,5 @@ class CommonLib:
 
     def get_text_by_attribute_name(self, attr_name):
         wd = self.app.wd
-        return wd.find_element_by_name(attr_name).get_attribute("value").strip()
+        return wd.find_element_by_name(attr_name).get_attribute("value")
+        #return wd.find_element_by_name(attr_name).get_attribute("value").strip()
