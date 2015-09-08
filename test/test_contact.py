@@ -1,15 +1,35 @@
 __author__ = 'Irina.Chegodaeva'
 import re
-from random import randrange
+import pytest
 from model.contact import Contact
+from random import randrange
+from fixture.contact import ContactHelper
+from conftest import app
 
 
+
+
+# lll = 0
+# def cont_count(app):
+#     global lll
+#     lll = app.contact.count()
+#     return lll
+#
+# #ll = cont_count(app)
+# values = []
+# values = [i for i in range(lll)]
+# @pytest.mark.parametrize("index", values, ids=[repr(x) for x in values])
 def test_contact_on_home_page(app):
-    if app.contact.count() == 0:
+
+    # lll = app.contact.count()
+    # if index >= app.contact.count():
+    #     return
+    count_contact = app.contact.count()
+    if count_contact == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                 delete_photo=False,
                                 dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
-    index = randrange(app.contact.count())
+    index = randrange(count_contact)
     contact_from_home_page = app.contact.get_contact_list()[index]
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)

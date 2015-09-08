@@ -4,7 +4,6 @@ from model.contact import Contact
 import pytest
 import string
 import random
-import time
 import re
 
 
