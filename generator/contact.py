@@ -31,9 +31,14 @@ def random_string(prefix, maxlen):
 
 
 def e_mail(fname, lname, domain):
-    s = fname + "." + lname + "@" + domain[11:,-4:]
+    s = fname + "." + lname + "@" + domain[11:]
     return s
 
+
+firstname = random_string("first_name", 10)
+lastname = random_string("last_name", 20)
+homepage = "http://www.homepage.net"
+e_mail_1 = e_mail(firstname, lastname, homepage)
 testdata = [Contact(first_name="",
                     middle_name="",
                     last_name="",
@@ -55,9 +60,9 @@ testdata = [Contact(first_name="",
                     home_addr="",
                     notes="",
                     extra_phone="")] + [
-    Contact(first_name=random_string("first_name", 10),
+    Contact(first_name=firstname,
             middle_name=random_string("middle_name", 20),
-            last_name=random_string("last_name", 20),
+            last_name=lastname,
             nickname=random_string("nickname", 10),
             pic=str(os.path.dirname(__file__)) + "/photo.gif",
             title=random_string("title", 10),
@@ -67,8 +72,8 @@ testdata = [Contact(first_name="",
             mobile_phone=random_string("mobile_phone", 10),
             work_phone=random_string("work_phone", 10),
             fax=random_string("fax", 10),
-            homepage="http://www.homepage.net",
-            email_1=e_mail(first_name,Contact.last_name, Contact.homepage),
+            homepage=homepage,
+            email_1=e_mail_1,
             email_2=random_string("email_2", 10),
             email_3="email_3@company.com",
             birth_year=random_string("birth_year", 10),
