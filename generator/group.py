@@ -1,11 +1,12 @@
-__author__ = 'Irina.Chegodaeva'
-from model.group import Group
+# __author__ = 'Irina.Chegodaeva'
+
 import random
 import string
 import os.path
-import json
-import getopt
+import jsonpickle
 import sys
+import getopt
+from model.group import Group
 
 
 try:
@@ -13,7 +14,6 @@ try:
 except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
-
 
 n = 5
 f = "data/groups.json"
@@ -25,9 +25,8 @@ for o, a in opts:
         f = a
 
 
-
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
+    symbols = string.ascii_letters + string.digits + """string.punctuation""" + " "*10
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 testdata = [Group(name="", header="", footer="")] + [
@@ -37,5 +36,6 @@ testdata = [Group(name="", header="", footer="")] + [
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 
-with open(file, "w") as outpit_file:
-    outpit_file.write(json.dumps(testdata, default=lambda x: x.__dict__, indent=2))
+with open(file, "w") as output_file:
+    jsonpickle.set_encoder_options("json", indent=2)
+    output_file.write(jsonpickle.encode(testdata))
