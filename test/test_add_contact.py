@@ -23,7 +23,7 @@ def test_add_contact(app, json_contacts):
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
-# функция удаляет пробелы в строке которые отсутствует на форме редактирования, но имеются на основной форме
+# функция удаляет пробелы в имени и фамилии, которые отсутствует на форме редактирования, но имеются на основной форме
 def trim_space(text):
     text = re.sub(r'\s+', ' ', text).strip()
     return text
