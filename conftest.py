@@ -1,5 +1,4 @@
 # __author__ = 'Irina.Chegodaeva'
-
 import pytest
 import json
 import os.path
@@ -39,11 +38,11 @@ def db(request):
                           name=db_config['name'],
                           user=db_config['user'],
                           password=db_config['password'])
+
     def fin():
         dbfixture.destroy()
     request.addfinalizer(fin)
     return dbfixture
-
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -55,9 +54,15 @@ def stop(request):
     return fixture
 
 
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
 
 
 def pytest_generate_tests(metafunc):

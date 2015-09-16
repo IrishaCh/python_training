@@ -1,17 +1,17 @@
-__author__ = 'Irina.Chegodaeva'
+# __author__ = 'Irina.Chegodaeva'
 import os
 from model.contact import Contact
-from random import randrange
+import random
 
 
-def test_edit_some_contact_from_edit_form(app):
-    if app.contact.count() == 0:
+def test_edit_some_contact_from_edit_form(app, db, check_ui):
+    if len(db.get_contact_list()) == 0:
         app.contact.add_contact(Contact(last_name="test" + app.libs.substring),
                                 delete_photo=False,
                                 dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     contact = Contact(first_name="First_Name",
                       middle_name="Middle_Name",
-                      last_name="Last_Name",
+                      last_name="Last_Name" + app.libs.substring,
                       nickname="Nickname",
                       pic=str(os.path.dirname(__file__)) + "\\photo.gif",
                       title="Title",
@@ -30,25 +30,30 @@ def test_edit_some_contact_from_edit_form(app):
                       home_addr="Home Address",
                       notes="Some Notes",
                       extra_phone="(999)111-11-55")
-    old_contacts = app.contact.get_contact_list()
-    index = randrange(len(old_contacts))
-    contact.id = old_contacts[index].id
-    app.contact.modify_some_contact(index, contact, delete_photo=True,
-                                    dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "3")), edit_detail="edit_form")
-    assert len(old_contacts) == app.contact.count()
-    new_contacts = app.contact.get_contact_list()
-    old_contacts[index] = contact
+    old_contacts = db.get_contact_list()
+    modified_contact = random.choice(old_contacts)
+    app.contact.modify_some_contact_by_id(modified_contact.id, contact, delete_photo=True,
+                                          dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "3")),
+                                          edit_detail="edit_form")
+    new_contacts = db.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
+    contact.id = modified_contact.id
+    old_contacts.remove(modified_contact)
+    old_contacts.insert(int(modified_contact.id), contact)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    if check_ui:
+        assert sorted(map(app.libs.clean_contact, new_contacts), key=Contact.id_or_max) ==\
+               sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
 
 
-def test_edit_some_contact_from_details(app):
+def test_edit_some_contact_from_details(app, db):
     if app.contact.count() == 0:
         app.contact.add_contact(Contact(last_name="test" + app.libs.substring),
                                 delete_photo=False,
                                 dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
     contact = Contact(first_name="First_Name" + app.libs.substring,
                       middle_name="Middle_Name",
-                      last_name="Last_Name",
+                      last_name="Last_Name" + app.libs.substring,
                       nickname="Nickname",
                       pic=str(os.path.dirname(__file__)) + "\\photo.gif",
                       title="Title",
@@ -67,12 +72,14 @@ def test_edit_some_contact_from_details(app):
                       home_addr="Home Address",
                       notes="Some Notes",
                       extra_phone="(999)111-11-55")
-    old_contacts = app.contact.get_contact_list()
-    index = randrange(len(old_contacts))
-    contact.id = old_contacts[index].id
-    app.contact.modify_some_contact(index, contact, delete_photo=True,
-                                    dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "4")), edit_detail="detail_form")
-    assert len(old_contacts) == app.contact.count()
-    new_contacts = app.contact.get_contact_list()
-    old_contacts[index] = contact
+    old_contacts = db.get_contact_list()
+    modified_contact = random.choice(old_contacts)
+    app.contact.modify_some_contact_by_id(modified_contact.id, contact, delete_photo=True,
+                                          dataset=(("1", "3"), ("2", "3"), ("3", "14"), ("4", "4")),
+                                          edit_detail="detail_form")
+    new_contacts = db.get_contact_list()
+    assert len(old_contacts) == len(new_contacts)
+    contact.id = modified_contact.id
+    old_contacts.remove(modified_contact)
+    old_contacts.insert(int(modified_contact.id), contact)
     assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
