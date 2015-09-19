@@ -5,8 +5,7 @@ from model.contact import Contact
 from random import randrange
 from fixture.contact import ContactHelper
 from conftest import app
-
-
+from fixture.db import *
 
 
 # lll = 0
@@ -19,24 +18,38 @@ from conftest import app
 # values = []
 # values = [i for i in range(lll)]
 # @pytest.mark.parametrize("index", values, ids=[repr(x) for x in values])
-def test_contact_on_home_page(app):
 
-    # lll = app.contact.count()
-    # if index >= app.contact.count():
-    #     return
-    count_contact = app.contact.count()
+
+def test_contact_on_home_page_compare_with_db(app, db):
+    count_contact = len(db.get_contact_list())
     if count_contact == 0:
         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                 delete_photo=False,
                                 dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
-    index = randrange(count_contact)
-    contact_from_home_page = app.contact.get_contact_list()[index]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
-    assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
-    assert contact_from_home_page.company_address == trim_spaces(contact_from_edit_page.company_address)
-    assert contact_from_home_page.homepage == trim_spaces(contact_from_edit_page.homepage)
-    assert contact_from_home_page.company_url == contact_from_edit_page.company_url
-    assert contact_from_home_page.all_e_mails_from_home_page == merge_e_mails_like_on_home_page(contact_from_edit_page)
+    for id1 in range(0, count_contact):
+        contact_from_home_page = app.contact.get_contact_list()[id1]
+        contact_from_db = db.get_contact_list()[id1]
+        assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db)
+        assert contact_from_home_page.company_address == trim_spaces(contact_from_db.company_address)
+        assert contact_from_home_page.homepage == trim_spaces(contact_from_db.homepage)
+        assert contact_from_home_page.company_url == contact_from_db.company_url
+        assert contact_from_home_page.all_e_mails_from_home_page == merge_e_mails_like_on_home_page(contact_from_db)
+
+
+# def test_contact_on_home_page_compare_with_edit_page(app, db):
+#     count_contact = len(db.get_contact_list())
+#     if count_contact == 0:
+#         app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
+#                                 delete_photo=False,
+#                                 dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
+#     index = randrange(count_contact)
+#     contact_from_home_page = app.contact.get_contact_list()[index]
+#     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
+#     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
+#     assert contact_from_home_page.company_address == trim_spaces(contact_from_edit_page.company_address)
+#     assert contact_from_home_page.homepage == trim_spaces(contact_from_edit_page.homepage)
+#     assert contact_from_home_page.company_url == contact_from_edit_page.company_url
+#     assert contact_from_home_page.all_e_mails_from_home_page == merge_e_mails_like_on_home_page(contact_from_edit_page)
 
 
 def extract_numbers(phone_number):

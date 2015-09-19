@@ -312,7 +312,6 @@ class ContactHelper:
             company_url = "http://maps.google.com/maps?q=%s&t=h" % substring_url.replace('\n', '%2C+')
         else:
             company_url = ""
-        # убираем в каждой строке адреса компании лидирующие и завершающие пробелы
         return Contact(first_name=first_name, last_name=last_name, company_address=address, id=id, home_phone=home_phone,
                        work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone, email_1=email_1,
                        email_2=email_2, email_3=email_3, homepage=homepage, company_url=company_url)

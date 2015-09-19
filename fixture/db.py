@@ -3,6 +3,7 @@ import mysql.connector
 from model.group import Group
 from model.contact import Contact
 from contextlib import closing
+import urllib
 
 
 class DbFixture:
@@ -47,6 +48,13 @@ class DbFixture:
             for row in cursor:
                 (id, firstname, middlename, lastname, nickname, title, company, address, home, mobile, work, fax, email,
                  email2, email3, homepage, byear, ayear, address2, notes, phone2) = row
+                all_e_mails = email + email2 + email3
+                all_phones = str(home + mobile + work + phone2)
+                if address != "":
+                    substring_url = urllib.parse.quote_plus(address.strip(), safe='\n', encoding=None, errors=None)
+                    company_url = "http://maps.google.com/maps?q=%s&t=h" % substring_url.replace('\n', '%2C+')
+                else:
+                    company_url = ""
                 list.append(Contact(id=str(id),
                                     first_name=firstname,
                                     middle_name=middlename,
@@ -67,7 +75,10 @@ class DbFixture:
                                     anniv_year=ayear,
                                     home_addr=address2,
                                     notes=notes,
-                                    extra_phone=phone2))
+                                    extra_phone=phone2,
+                                    all_e_mails_from_home_page=all_e_mails,
+                                    all_phones_from_home_page=all_phones,
+                                    company_url=company_url))
         return list
 
     def destroy(self):
