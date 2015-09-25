@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # __author__ = 'Irina.Chegodaeva'
 from selenium.common.exceptions import *
+from selenium.webdriver.support.ui import Select
 from model.contact import Contact
 import re
 import urllib
@@ -346,3 +347,17 @@ class ContactHelper:
         all_phones = str(home_phone + mobile_phone + work_phone + extra_phone)
         return Contact(home_phone=home_phone, work_phone=work_phone, mobile_phone=mobile_phone, extra_phone=extra_phone,
                        all_phones_from_home_page=all_phones)
+
+    def add_contact_in_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.find_cell_id_by_id_and_click(contact_id)
+        Select(wd.find_element_by_name("to_group")).select_by_index(group_id)
+        wd.find_element_by_name("add").click()
+        self.open_main_page()
+
+    def delete_contact_from_group(self, contact_id, group_id):
+        wd = self.app.wd
+        Select(wd.find_element_by_name("group")).select_by_index(group_id+2)
+        self.find_cell_id_by_id_and_click(contact_id)
+        wd.find_element_by_name("remove").click()
+        self.open_main_page()

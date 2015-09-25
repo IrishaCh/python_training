@@ -9,15 +9,15 @@ from fixture.orm import ORMFixture
 db = ORMFixture(host="127.0.0.1", name="addressbook", user="root", password="")
 
 try:
-    list = db.get_contact_list()
-    for item in list:
+    list_items = db.get_contact_list()
+    for item in list_items:
         print(item)
-    index = len(list)
+    index = len(list_items)
 finally:
     pass
 
 
-@pytest.mark.parametrize("contact", list, ids=[repr(x) for x in list])
+@pytest.mark.parametrize("contact", list_items, ids=[repr(x) for x in list_items])
 def test_contact_on_home_page_compare_with_db(app, db, contact):
     count_contact = len(db.get_contact_list())
     contact_from_home_page = None
@@ -35,6 +35,10 @@ def test_contact_on_home_page_compare_with_db(app, db, contact):
         if int(l2.id) == index:
             contact_from_db = l2
             break
+    #contact_from_db1 = filter(lambda x: int(x.id)==index, map(lambda y: y in x, db.get_contact_list()))
+    #contact_from_db1 = filter(lambda x: x in db.get_contact_list(), filter(lambda y: int(y.id)==index, db.get_contact_list()))
+    contact_from_db1 = filter(lambda x: int(x.id)==index, map(lambda x: x, db.get_contact_list()))
+    contact_from_db1 = filter(lambda x: int(x.id)==index, db.get_contact_list())
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_db)
     assert contact_from_home_page.company_address == trim_spaces(contact_from_db.company_address)
     assert contact_from_home_page.homepage == trim_spaces(contact_from_db.homepage)
