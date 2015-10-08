@@ -28,7 +28,7 @@ def test_add_any_contact_in_any_group(app):
 
 # добавление контакта в группу, если он не в этой группе
 def test_add_contact_in_group_if_its_not_in_this_group(app):
-    for i in range(0, 100):
+    for i in range(0, 10):
         if len(db.get_group_list()) == 0:
             with pytest.allure.step('If there is no contact I will add a new one'):
                 app.group.create(Group(name="test"))
