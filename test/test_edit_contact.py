@@ -98,5 +98,5 @@ def test_edit_some_contact_from_details(app, db):
         contact.id = modified_contact.id
         old_contacts.remove(modified_contact)
         old_contacts.insert(int(modified_contact.id), contact)
-    with pytest.allure.step('Then the new contact list is equal to the old list with the edit contact'):
+    with pytest.allure.step('Then the new contact list is equal to the old list with the edited contact'):
         assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
