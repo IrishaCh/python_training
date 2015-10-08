@@ -41,6 +41,6 @@ def test_add_contact_in_group_if_its_not_in_this_group(app):
                 app.contact.add_contact(Contact(first_name="test" + app.libs.substring),
                                         delete_photo=False,
                                         dataset=(("1", "3"), ("2", "2"), ("3", "12"), ("4", "3"), ("5", "1")))
-                contact_list = random.choice(db.get_contacts_not_in_group(group))
-        with pytest.allure.step('Then I add the contact %s in the group %s' % (contact_list, group)):
-            app.contact.add_contact_in_group(contact_list.id, group_index)
+        contact = random.choice(db.get_contacts_not_in_group(group))
+        with pytest.allure.step('Then I add the contact %s in the group %s' % (contact, group)):
+            app.contact.add_contact_in_group(contact.id, group_index)
