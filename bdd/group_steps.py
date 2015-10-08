@@ -12,7 +12,7 @@ def group_list(db):
     return db.get_group_list()
 
 
-@pytest.allure.step('Given a group with name={name}, header={header} and footer=[footer}')
+@pytest.allure.step('Given a group with name={name}, header={header} and footer={footer}')
 @given('a group with <name>, <header> and <footer>')
 def new_group(name, header, footer):
     return Group(name=name, header=header, footer=footer)
