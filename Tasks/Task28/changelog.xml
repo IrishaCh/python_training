@@ -1,0 +1,159 @@
+commit e5506eaa3cab8fb6d90dda783403ef86d962e1f9
+tree bedc84c3ca932aeda25573b80df7565abd8e4a1d
+parent cb0ea0cb1f56d6ab43d0369808954a0b4a19d659
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 16:26:11 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 16:26:11 +0300
+
+    1 С‚РµСЃС‚ СѓРґР°Р»РµРЅ РёР· СЃСЊСЋС‚Р°
+
+
+
+:100644 100644 cfe5695a0ec7b2dbb5decd0b6d70533533c77b71 cfe5695a0ec7b2dbb5decd0b6d70533533c77b71 R100	test/test_contact.py	test/__test_contact.py
+commit cb0ea0cb1f56d6ab43d0369808954a0b4a19d659
+tree 3323b7ed038dc6eb5090fe4930aff9ce2bbc3bbc
+parent 063638bac1398d3b973ad6a46fae4b7d3b55e861
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 16:18:26 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 16:18:26 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure РІРѕ РІСЃРµС… С‚РµСЃС‚Р°С…
+
+
+
+:100644 100644 b0b0737a13945fc98da9182d3c72ebfa9be2d334 7515ea4ab91d5e4a7e7beb250f394ea8e24ec10d M	.idea/workspace.xml
+:100644 100644 26404192bc54d528c93e551a8ae2c58f20c8f908 f653aff2b87f3888c7672c9886d48530802ca816 M	test/test_del_contact.py
+:100644 100644 fc5bea7bd410da4c7c85fa7d713b3ad1b9a243d6 dcad20aae6c6284966797e353fcc5af1240d1d6a M	test/test_delete_contact_from_group.py
+:100644 100644 08fded0d3d304ff5ba836ec843dd79629151a2ce 5c574d2028aa5b8a68d594496b695a4d2a5a573f M	test/test_edit_contact.py
+:100644 100644 51c757c55604bed22a014ff2d4f4aaa78946e8ff 26161061ef21e3571ef4c82ea8d7affb0fa95f64 M	test/test_edit_group.py
+:100644 100644 6373280d191ce8c1a9ab7264143f988573a9a76f 26be9f2560479c0989e445408ec3bae4fc2df643 M	test/test_phones.py
+commit 063638bac1398d3b973ad6a46fae4b7d3b55e861
+tree a23c37ea7f64c35ee212040b2cb362d577d192b1
+parent c2ce2eb9158845bd30d36ebe184e05bafeeb5000
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 15:24:33 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 15:24:33 +0300
+
+    fix: РЅРµ РѕС‚РєСЂС‹РІР°Р»Р°СЃСЊ РіР»Р°РІРЅР°СЏ СЃС‚СЂР°РЅРёС†Р° РІ С‚РµСЃС‚Р°С… РґРѕР±Р°РІР»РµРЅРёСЏ РєРѕРЅС‚Р°РєС‚Р° РІ
+    РіСЂСѓРїРїСѓ
+
+
+
+:100644 100644 4569c6c488f8b2eadc6ea223cdf33139b8ca5dca 9c5d1113405428564fe4cf86979aea9058f15d06 M	fixture/contact.py
+commit c2ce2eb9158845bd30d36ebe184e05bafeeb5000
+tree a3cc7a7ba84fe602b9c3b10c2e2234c7a8d3aa58
+parent 2dad50788ce42d470775a54ba8e5c5b84e1e2f7b
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:53:22 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:53:22 +0300
+
+    СЂРµС„Р°РєС‚РѕСЂРёРЅРі
+
+
+
+:100644 100644 51ee12b0a40365369f96953d87b59c2f3e823fda 52a3d94733db32d8df5b693d3b6cd3ab0f544ac4 M	test/test_add_contact_in_group.py
+commit 2dad50788ce42d470775a54ba8e5c5b84e1e2f7b
+tree e3157d015a46a9d52d357c401b640e4d4409d81e
+parent e8d07d8cbb15ed871500b7e6536317ce14c3917d
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:40:59 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:40:59 +0300
+
+    fix: РёСЃРїСЂР°РІР»РµРЅР° РїСЂРёРІРЅРµСЃРµРЅРЅР°СЏ РІ РїСЂРµРґС‹РґСѓС‰РµРј РєРѕРјРјРёС‚Рµ РѕС€РёР±РєР°
+
+
+
+:100644 100644 5dd9ef28bbe93a9e14ac02e578d7d4266bda06f5 51ee12b0a40365369f96953d87b59c2f3e823fda M	test/test_add_contact_in_group.py
+commit e8d07d8cbb15ed871500b7e6536317ce14c3917d
+tree abca41f0c34b4f8de758740266465eb4578732d0
+parent 75fef3b6593797f218424e1396dc9f257e24db63
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:19:57 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 14:19:57 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure РІ С‚РµСЃС‚Р°С… test_add_contact,
+    test_add_contatc_in_group, test_edit_contact
+
+
+
+:100644 100644 5dc91624866e605d52336b33d5d8fc31024fb9f4 81406d05028bd6280f6e87f21273b65c95f986f1 M	test/test_add_contact.py
+:100644 100644 62c1ef856bfa472bb08b94f2a07bf40d5ee57479 5dd9ef28bbe93a9e14ac02e578d7d4266bda06f5 M	test/test_add_contact_in_group.py
+:100644 100644 cc9427517340dd8611b38b109cc078ad93ad1223 08fded0d3d304ff5ba836ec843dd79629151a2ce M	test/test_edit_contact.py
+commit 75fef3b6593797f218424e1396dc9f257e24db63
+tree df0e00674ecf6e92eb1328eddfae60b1582ca318
+parent afc02fe18948f1b03d1b7373ea070ef81ae808c1
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 13:43:28 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 13:43:28 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure РІ С‚РµСЃС‚Рµ test_edit_contact
+
+
+
+:100644 100644 9c7214bd25d776f64dda1bb1dc9f7872d3b1ddff cc9427517340dd8611b38b109cc078ad93ad1223 M	test/test_edit_contact.py
+commit afc02fe18948f1b03d1b7373ea070ef81ae808c1
+tree 55e97c8c02b6ec9eb8720dc71072fd95c6cff479
+parent 55bfc726be770e58c4b84771257200f7625ccfe9
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 12:56:36 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 12:56:36 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure РІ С‚РµСЃС‚Рµ test_del_group
+
+
+
+:100644 100644 9962b94fafa1ce8786026ce772189e2c8c8c9555 b0b0737a13945fc98da9182d3c72ebfa9be2d334 M	.idea/workspace.xml
+:100644 100644 8f1faf62f23dc739af477b7bb950d21e2e65d948 7fbe86d162d860ee9fba6e33303755d7b9cfa57b M	test/test_del_group.py
+commit 55bfc726be770e58c4b84771257200f7625ccfe9
+tree 5327925ac3aae7e5e0c927ac53a36c10c34159d8
+parent 454cdbd2d1205e92f5f9a5d620249a03fc915397
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:43:40 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:43:40 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure РІ РѕР±С‹С‡РѕРј С‚РµСЃС‚Рµ
+
+
+
+:100644 100644 b2d6d90b81a25c30bffcb8b08fdc6161d7262e6b 9962b94fafa1ce8786026ce772189e2c8c8c9555 M	.idea/workspace.xml
+:100644 100644 3f9e89c58972d1ae7105131568c57894362084a5 a2f11b3398c95aa6dedc17e2f22cc77a767070ab M	test/test_add_group.py
+commit 454cdbd2d1205e92f5f9a5d620249a03fc915397
+tree 85c4e75122e178a6f5dd109da7d84b2ab0d25b17
+parent b1dfaa4975c64b2089372a8028de691e80b39d2f
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:26:13 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:26:13 +0300
+
+    fixed: РџСЂРѕРїСѓС‰РµРЅР° СЃРєРѕР±РєР°
+
+
+
+:100644 100644 85df795743dc71410a78cfa2906de6d65ea8d2f4 b2d6d90b81a25c30bffcb8b08fdc6161d7262e6b M	.idea/workspace.xml
+:100644 100644 8d9e4387e5fdedac5611d96bf0f70d69944ceb90 9eb8c934ed0d11b81ff4e980f341b988281a1218 M	bdd/group_steps.py
+commit b1dfaa4975c64b2089372a8028de691e80b39d2f
+tree 3e7e2dc4adf4cdf672bb20477f7a496ca55c51fa
+parent 8f94204187e6798c523420311331d4732821649a
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:15:35 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:15:35 +0300
+
+    fix: Р·Р°Р±С‹С‚Рѕ РґРІРѕРµС‚РѕС‡РёРµ
+
+
+
+:100644 100644 9a715c5f3d7ac4d2d8c1cb3bc0fd6be2e0217679 85df795743dc71410a78cfa2906de6d65ea8d2f4 M	.idea/workspace.xml
+:100644 100644 8d6ae2104b33b48039d22c5703a5e4f89acf378c 8d9e4387e5fdedac5611d96bf0f70d69944ceb90 M	bdd/group_steps.py
+commit 8f94204187e6798c523420311331d4732821649a
+tree 911767a1c1ec4ca2355ad3c461ba2d14ffd5822a
+parent 1208fe0bcea5ff135531e8e5e01b8626cadf9af9
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:12:27 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 11:12:27 +0300
+
+    РћРїРёСЃР°РЅС‹ С€Р°РіРё РґР»СЏ Allure
+
+
+
+:100644 100644 4c39b434462322c200fd64052bd2d5fd45e0fccd 9a715c5f3d7ac4d2d8c1cb3bc0fd6be2e0217679 M	.idea/workspace.xml
+:100644 100644 7386bf85ccfb4aa4e03eb28bed7501573544bbae 8d6ae2104b33b48039d22c5703a5e4f89acf378c M	bdd/group_steps.py
+commit 1208fe0bcea5ff135531e8e5e01b8626cadf9af9
+tree 35a3e9065d786829253018733af6666dd8afd62b
+parent 9a4ac9834dd8d2eed1f057fcc26d838523002ceb
+author Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 10:36:29 +0300
+committer Irina.Chegodaeva <irina.chegodaeva@billing.ru> 2015-10-08 10:36:29 +0300
+
+    РџРѕРґРєР»СЋС‡РµРЅ Allure
+
+
+
+:100644 100644 ad5297937d90de6fcfc0a77f0eb838a56a0497e4 4c39b434462322c200fd64052bd2d5fd45e0fccd M	.idea/workspace.xml
+:000000 100644 0000000000000000000000000000000000000000 6c9fed71cf295226e67318367b9f13d67210766b A	lxml-3.4.4-cp34-none-win32.whl
+:100644 100644 73f4aee35369ce1949d8c2c5c902aa3d1d926131 6d40881a49f562c049754029a6b73ef289662ef0 M	requirements.txt

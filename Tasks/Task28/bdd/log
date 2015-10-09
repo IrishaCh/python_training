@@ -1,0 +1,59 @@
+Started by user [8mha:AAAAlh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzOEgYu/dLi1CL9vNKcHACFIKlWvwAAAA==[0manonymous
+Building in workspace C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace
+ > C:\Program Files (x86)\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > C:\Program Files (x86)\Git\bin\git.exe config remote.origin.url https://github.com/IrishaCh/python_training/ # timeout=10
+Fetching upstream changes from https://github.com/IrishaCh/python_training/
+ > C:\Program Files (x86)\Git\bin\git.exe --version # timeout=10
+ > C:\Program Files (x86)\Git\bin\git.exe -c core.askpass=true fetch --tags --progress https://github.com/IrishaCh/python_training/ +refs/heads/*:refs/remotes/origin/*
+ > C:\Program Files (x86)\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > C:\Program Files (x86)\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision e5506eaa3cab8fb6d90dda783403ef86d962e1f9 (refs/remotes/origin/master)
+ > C:\Program Files (x86)\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > C:\Program Files (x86)\Git\bin\git.exe checkout -f e5506eaa3cab8fb6d90dda783403ef86d962e1f9
+ > C:\Program Files (x86)\Git\bin\git.exe rev-list e5506eaa3cab8fb6d90dda783403ef86d962e1f9 # timeout=10
+[workspace] $ cmd.exe /c call C:\Users\IRINA~1.CHE\AppData\Local\Temp\shiningpanda8473006936128018018.bat
+
+C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace>pip install -r requirements.txt 
+Requirement already satisfied (use --upgrade to upgrade): pytest in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): pytest-bdd in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): selenium in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 3))
+Requirement already satisfied (use --upgrade to upgrade): jsonpickle in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 4))
+Requirement already satisfied (use --upgrade to upgrade): pony in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 5))
+Requirement already satisfied (use --upgrade to upgrade): pymysql in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 6))
+Requirement already satisfied (use --upgrade to upgrade): mysql-connector-python in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 8))
+Requirement already satisfied (use --upgrade to upgrade): lxml==3.4.4 from file:///C:/Users/irina.chegodaeva/.jenkins/jobs/addressbook_tests_bdd/workspace/lxml-3.4.4-cp34-none-win32.whl in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 9))
+Requirement already satisfied (use --upgrade to upgrade): pytest-allure-adaptor in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from -r requirements.txt (line 10))
+Requirement already satisfied (use --upgrade to upgrade): py>=1.4.29 in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest->-r requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): colorama in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest->-r requirements.txt (line 1))
+Requirement already satisfied (use --upgrade to upgrade): parse-type in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-bdd->-r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): parse in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-bdd->-r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): six>=1.9.0 in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-bdd->-r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): glob2 in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-bdd->-r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): Mako in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-bdd->-r requirements.txt (line 2))
+Requirement already satisfied (use --upgrade to upgrade): namedlist in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-allure-adaptor->-r requirements.txt (line 10))
+Requirement already satisfied (use --upgrade to upgrade): enum34 in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from pytest-allure-adaptor->-r requirements.txt (line 10))
+Requirement already satisfied (use --upgrade to upgrade): MarkupSafe>=0.9.2 in c:\users\irina.chegodaeva\.jenkins\shiningpanda\jobs\10f9a718\virtualenvs\d41d8cd9\lib\site-packages (from Mako->pytest-bdd->-r requirements.txt (line 2))
+
+C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace>py.test --junitxml=report.xml --cucumberjson=report.json bdd\group_scenarios.py 
+============================= test session starts =============================
+platform win32 -- Python 3.4.3, pytest-2.8.1, py-1.4.30, pluggy-0.3.1
+rootdir: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace\bdd, inifile: 
+plugins: allure-adaptor-1.6.7, bdd-2.15.0
+collected 3 items
+
+bdd\group_scenarios.py ...
+
+ generated xml file: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace\report.xml 
+ generated json file: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace\report.json 
+================ 3 passed, 2 pytest-warnings in 12.96 seconds =================
+
+C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace>exit 0 
+Recording test results
+[CucumberReportPublisher] Compiling Cucumber Html Reports ...
+[Cucumber test report builder] Copying all json files from: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\workspace to reports directory: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\builds\41\cucumber-reports-with-handlebars
+[CucumberReportPublisher] Found 1 json files.
+[Cucumber test report builder] 0. Found a json file: report.json
+[Cucumber test report builder] Generating HTML reports
+processing: C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests_bdd\builds\41\cucumber-reports-with-handlebars\jsonData\report.json
+Finished: SUCCESS

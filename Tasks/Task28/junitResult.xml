@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<result plugin="junit@1.9">
+  <suites>
+    <suite>
+      <file>C:\Users\irina.chegodaeva\.jenkins\jobs\addressbook_tests\workspace\report.xml</file>
+      <name>pytest</name>
+      <duration>13.903294</duration>
+      <cases>
+        <case>
+          <duration>8.426763</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:;;]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+        <case>
+          <duration>1.0331008</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:nameWOq;headerI9f;footerb K  ]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+        <case>
+          <duration>0.97109604</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:name;header u;footerj7h v]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+        <case>
+          <duration>0.961092</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:nameXGVxcSn;headerz;footerDMnBCbfG]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+        <case>
+          <duration>0.97209096</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:nameP00 ;headerWWci yWhr muJ;footerBc e6t tCf 6 ]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+        <case>
+          <duration>1.539151</duration>
+          <className>test_add_group</className>
+          <testName>test_add_group[None:nameY  Ts1k;headerBEQqhvDvz9uUm6k  ;footerTiNRw1v Tb4 cRP ]</testName>
+          <skipped>false</skipped>
+          <failedSince>0</failedSince>
+        </case>
+      </cases>
+    </suite>
+  </suites>
+  <duration>13.903294</duration>
+  <keepLongStdio>false</keepLongStdio>
+</result>
